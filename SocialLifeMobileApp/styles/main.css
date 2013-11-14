@@ -39,7 +39,7 @@ body, html {
     background-repeat: no-repeat;
     width: 85px;
     height: 60px;
-    margin: 40px auto;
+    margin: 20px auto;
 }
 
 /* BUTTON STYLES*/
@@ -47,7 +47,7 @@ body, html {
     text-align: center;
 }
 
-.login-button {
+.login-button, .register-button {
     width: 50%;
     max-width: 300px;
     font-size: .9em;

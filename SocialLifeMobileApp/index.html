@@ -10,7 +10,10 @@
         <script src="kendo/js/jquery.min.js"></script>
         <script src="kendo/js/kendo.mobile.min.js"></script>
         <script src="https://maps.googleapis.com/maps/api/js?v=3.exp&sensor=true"></script>
-
+        <script src="http://crypto-js.googlecode.com/svn/tags/3.1.2/build/rollups/sha1.js"></script>
+        
+        <script src="scripts/libs/rsvp.min.js"></script>
+        <script src="scripts/http-request.js"></script>
         <script src="scripts/login.js"></script>
         <script src="scripts/location.js"></script>
         <script src="scripts/weather.js"></script>
@@ -45,7 +48,7 @@
                 <div class="logo"></div>
                 <h3 data-bind="invisible: isLoggedIn">Enter your credentials:</h3>
                 <h1 class="welcome" data-bind="visible: isLoggedIn">
-                    Welcome, <span data-bind="text: username"></span>!
+                    Welcome, <span data-bind="text: displayName"></span>! Username: <span data-bind="text: username"></span>
                 </h1>
                 <div class="buttonArea">
                     <input type="submit" id="logout" data-role="button" data-bind="click: onLogout, visible: isLoggedIn" class="login-button" value="Logout" />
@@ -66,10 +69,30 @@
                             </label>
                         </li>
                     </ul>
+                    <ul data-role="listview" data-style="inset" data-bind="visible: isRegisterPressed">
+                        <li>
+                            <span>Please provide the following in order to register:</span>
+                        </li>
+                        <li>
+                            <label>
+                                Repeat the password
+                                <input type="text" data-bind="value: passwordRepeat" />
+                            </label>
+                        </li>
+                        <li>
+                            <label>
+                                Display Name
+                                <input type="text" data-bind="value: displayName" />
+                            </label>
+                        </li>
+                    </ul>
 
                     <div class="buttonArea">
                         <input type="submit" id="login" data-role="button" data-bind="click: onLogin, invisible: isLoggedIn" class="login-button" value="Login" />
+                        <br />
+                        <input type="submit" id="register" data-role="button" data-bind="click: onRegister, invisible: isLoggedIn", class="register-button" value="Register" />
                     </div>
+                    
                 </form>
             </div>
 
