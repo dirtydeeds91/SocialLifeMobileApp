@@ -3,12 +3,13 @@
     app = global.app = global.app || {};
 
     LoginViewModel = kendo.data.ObservableObject.extend({
-        isLoggedIn: false,
         isRegisterPressed: false,
+        isLoggedIn: global.app.isLoggedIn,
         username: "",
         password: "",
         displayName: "",
         passwordRepeat: "",
+        profile: {},
 
         onLogin: function () {
             var that = this,
@@ -31,12 +32,14 @@
             
             var jsonData = JSON.stringify(loginInfo);
             
-            httpRequest.postJSON("http://localhost:22757/api/users/login", jsonData)
+            httpRequest.postJSON(global.app.serviceUrl + global.app.users + "login", jsonData)
             .then(function (data) {
-                that.set("displayName", data.DisplayName);
-                that.set("isLoggedIn", true);
+                global.app.sessionKey = data.SessionKey;
+                global.app.userId = data.Id;
+                that.onLoginSuccess("login");
             });
         },
+        
         onRegister: function () {
             if (this.isRegisterPressed) {
                 var that = this,
@@ -73,11 +76,15 @@
             
                 var jsonData = JSON.stringify(loginInfo);
             
-                httpRequest.postJSON("http://localhost:22757/api/users/register", jsonData)
+                httpRequest.postJSON(global.app.serviceUrl + global.app.users + "register", jsonData)
                 .then(function (data) {
-                    that.set("displayName", data.DisplayName);
+                    global.app.sessionKey = data.SessionKey;
+                    
+                    global.app.userId = data.Id;
+                    
                     that.set("isRegisterPressed", false);
-                    that.set("isLoggedIn", true);
+                    
+                    that.onLoginSuccess("register");
                 });
             }
             else {
@@ -89,7 +96,42 @@
             var that = this;
 
             that.clearForm();
+            global.app.isLoggedIn = false;
             that.set("isLoggedIn", false);
+        },
+        
+        onLoginSuccess: function(type) {
+            var that = this;
+            
+            //IF just registered!
+            if (type == "register") {
+                global.app.isLoggedIn = true;
+                that.set("isLoggedIn", true);
+                global.app.application.navigate("views/update-profile-view.html#profile-update", 'slide:left');
+            }
+            else {
+                httpRequest.getJSON(global.app.serviceUrl + global.app.profiles + "user/" + global.app.userId
+                                    + "?sessionKey=" + global.app.sessionKey)
+                .then(function (user) {
+                    var userProfile = {
+                        "displayName": user.DisplayName,
+                        "about": user.About,
+                        "avatar": user.Avatar,
+                        "birthdate": user.BirthDate,
+                        "city": user.City,
+                        "country": user.Country,
+                        "gender": user.Gender,
+                        "mood": user.Mood,
+                        "status": user.Status,
+                        "phone": user.PhoneNumber,
+                        "friends": user.FriendsList
+                    };
+                    that.set("profile", userProfile);
+                    
+                    global.app.isLoggedIn = true;
+                    that.set("isLoggedIn", true);
+                });
+            }
         },
 
         clearForm: function () {

@@ -50,7 +50,6 @@ window.httpRequest = (function(){
                 url:url,
                 type:"PUT",
                 data: putdata,
-                dataType:"json",
                 contentType:"application/json",
                 timeout:5000,
                 success:function(data){

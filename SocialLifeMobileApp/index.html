@@ -15,6 +15,7 @@
         <script src="scripts/libs/rsvp.min.js"></script>
         <script src="scripts/http-request.js"></script>
         <script src="scripts/login.js"></script>
+        <script src="scripts/profile-update.js"></script>
         <script src="scripts/location.js"></script>
         <script src="scripts/weather.js"></script>
         <script src="scripts/app.js"></script>
@@ -48,7 +49,7 @@
                 <div class="logo"></div>
                 <h3 data-bind="invisible: isLoggedIn">Enter your credentials:</h3>
                 <h1 class="welcome" data-bind="visible: isLoggedIn">
-                    Welcome, <span data-bind="text: displayName"></span>! Username: <span data-bind="text: username"></span>
+                    Welcome, <span data-bind="text: profile.displayName"></span>! Username: <span data-bind="text: username"></span>
                 </h1>
                 <div class="buttonArea">
                     <input type="submit" id="logout" data-role="button" data-bind="click: onLogout, visible: isLoggedIn" class="login-button" value="Logout" />
@@ -75,8 +76,8 @@
                         </li>
                         <li>
                             <label>
-                                Repeat the password
-                                <input type="text" data-bind="value: passwordRepeat" />
+                                Repeat password
+                                <input type="password" data-bind="value: passwordRepeat" />
                             </label>
                         </li>
                         <li>
@@ -90,7 +91,7 @@
                     <div class="buttonArea">
                         <input type="submit" id="login" data-role="button" data-bind="click: onLogin, invisible: isLoggedIn" class="login-button" value="Login" />
                         <br />
-                        <input type="submit" id="register" data-role="button" data-bind="click: onRegister, invisible: isLoggedIn", class="register-button" value="Register" />
+                        <input type="submit" id="register" data-role="button" data-bind="click: onRegister, invisible: isLoggedIn" class="register-button" value="Register" />
                     </div>
                     
                 </form>
@@ -137,6 +138,8 @@
                     <!--<a href="#tabstrip-home" data-icon="home">Home</a>-->
                     <a href="#tabstrip-login" data-icon="home">Home</a>
                     <a href="views/friends-view.html#tabstrip-location" data-icon="contacts">Friends</a>
+                    
+                    <a href="views/update-profile-view.html#profile-update" data-icon="contacts">Update</a>
                     <a href="views/events-view.html#tabstrip-weather" data-icon="toprated">Events</a>
                 </div>
             </div>

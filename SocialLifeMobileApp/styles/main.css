@@ -10,7 +10,7 @@ body, html {
     font-size: 1.8em;
 }
 
-.view-content h1.welcome {
+.view-content h1.welcome, .view-content h1.error {
     text-align: center;
 }
 
@@ -47,7 +47,7 @@ body, html {
     text-align: center;
 }
 
-.login-button, .register-button {
+.login-button, .register-button, .update-button {
     width: 50%;
     max-width: 300px;
     font-size: .9em;
