@@ -1,0 +1,41 @@
+<!-- Profile updater -->
+<div id="users-view"
+     data-role="view"
+     data-title="Users"
+     data-model="app.userService.viewModel"
+     data-show="app.userService.viewModel.onLoad">
+    <div class="view-content">
+        <div class="users-info" data-bind="visible: isLoggedIn">
+            <ul data-role="listview" data-style="inset">
+                <li>
+                    <label>
+                        Search for users
+                        <input type="search" data-bind="value: search" />
+                    </label>
+                </li>
+                <li>
+                    <div class="buttonArea">
+                        <input type="submit" class="update" 
+                               data-role="button" data-bind="click: onSearch" 
+                               class="update-button" value="Search" />
+                    </div>
+                </li>
+            </ul>
+            <div data-bind="visible: areUsersFound">
+                <h1>Results:</h1>
+                <ul data-role="listview" data-style="inset" 
+                    data-bind="source: users" data-template="users-template"></ul>
+            </div>
+        </div>
+        <div class="logged-out" data-bind="invisible: isLoggedIn">
+            <h1 class="error" data-bind="invisible: isLoggedIn">You are not logged in. Please log in to search.</h1>
+        </div>
+    </div>
+</div>
+
+<script id="users-template" type="text/x-kendo-template">
+    <li data-bind="{events: {click: navigateToUser}}">
+        <span>Display name: </span>
+        <span>#: DisplayName #</span>
+    </li>
+</script>

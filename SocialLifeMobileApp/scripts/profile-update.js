@@ -14,6 +14,7 @@
         mood: "",
         status: "",
         phone: "",
+        friends: [],
         password: "",
 
         init: function () {
@@ -22,18 +23,24 @@
             kendo.data.ObservableObject.fn.init.apply(that, []);
         },
         
-        load: function () {
+        load: function (e) {
             var that = global.app.profileService.viewModel;
             that.set("isLoggedIn", global.app.isLoggedIn);
             
+            var userId = e.view.params.userId;
+            
+            if(userId == undefined) {
+                userId = global.app.userId;
+            }
             if (global.app.sessionKey != "" && global.app.sessionKey != undefined) {
-                httpRequest.getJSON(global.app.serviceUrl + global.app.profiles + "user/" + global.app.userId
+                httpRequest.getJSON(global.app.serviceUrl + global.app.profiles + "user/" + userId
                                     + "?sessionKey=" + global.app.sessionKey)
                 .then(function (user) {
                     that.set("displayName", user.DisplayName);
                     that.set("about", user.About);
                     that.set("avatar", user.Avatar);
-                    that.set("birthdate", user.Birthdate);
+                    var dateString = new Date(user.BirthDate).toDateString();
+                    that.set("birthdate", dateString);
                     that.set("city", user.City);
                     that.set("country", user.Country);
                     if (user.Gender == true) {
@@ -44,7 +51,9 @@
                     }
                     that.set("mood", user.Mood);
                     that.set("status", user.Status);
-                    that.set("phone", user.Phone);
+                    that.set("phone", user.PhoneNumber);
+                    that.set("friends", user.FriendsList);
+                    var x = 5;
                 });
             }
         },
@@ -61,21 +70,29 @@
                        birthdate = that.get("birthdate"),
                        city = that.get("city"),
                        country = that.get("country"),
-                       gender = that.get("gender"),
+                       gender = $('input[name=gender-radio]:checked', '#update-form').val(),
                        mood = that.get("mood"),
-                       status = that.get("status"),
+                       status = $('input[name=status-radio]:checked', '#update-form').val(),
                        phone = that.get("phone");
             
-            if(gender == "Male") {
+            if (password === "") {
+                navigator.notification.alert("Please enter your password!",
+                                             function () {
+                                             }, "Update failed", 'OK');
+
+                return;
+            }
+            
+            if (gender == "Male") {
                 gender = "true";
             }
-            else {
+            else if(gender == "Female") {
                 gender = "false";
             }
             
             var data = {
                 "About": about,
-                "Avatar": "#",
+                "Avatar": avatar,
                 "BirthDate": birthdate,
                 "City": city,
                 "Country": country,
@@ -86,8 +103,6 @@
                 "AuthCode": CryptoJS.SHA1(password).toString(),
                 "DisplayName": displayName
             };
-            
-            
             
             var jsonData = JSON.stringify(data);
             
