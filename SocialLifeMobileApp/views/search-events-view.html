@@ -1,15 +1,15 @@
-<!-- User searcher -->
-<div id="users-view"
+<!-- Search events -->
+<div id="search-events-view"
      data-role="view"
-     data-title="Search users"
-     data-model="app.userService.viewModel"
-     data-show="app.userService.viewModel.onLoad">
+     data-title="Search events"
+     data-model="app.eventSearchService.viewModel"
+     data-show="app.eventSearchService.viewModel.onLoad">
     <div class="view-content">
-        <div class="users-info" data-bind="visible: isLoggedIn">
+        <div class="events-info" data-bind="visible: isLoggedIn">
             <ul class="white-form" data-role="listview" data-style="inset">
                 <li>
                     <label>
-                        Search for users
+                        Search for events
                         <input type="search" data-bind="value: search" />
                     </label>
                 </li>
@@ -21,13 +21,13 @@
                     </div>
                 </li>
             </ul>
-            <div data-bind="visible: areUsersSearched">
+            <div data-bind="visible: areEventsSearched">
                 <h1>Results:</h1>
-                <h1 data-bind="invisible: areUsersFound">No users found.</h1>
+                <h1 data-bind="invisible: areEventsFound">No events found.</h1>
                 <ul data-role="listview"
                     data-style="inset" 
-                    data-bind="source: users, visible: areUsersFound"
-                    data-template="users-template">
+                    data-bind="source: events, visible: areEventsFound"
+                    data-template="event-results-template">
                 </ul>
             </div>
         </div>
@@ -37,12 +37,9 @@
     </div>
 </div>
 
-<script type="text/x-kendo-tmpl" id="users-template">
-    <div data-bind="{events: {click: navigateToUser}}">
-        <a>${DisplayName}</a>
-    </div>
-    <!--<li data-bind="{events: {click: navigateToUser}}">
-    <span>Display name: </span>
-    <span>#: DisplayName #</span>
-    </li>-->
+<script type="text/x-kendo-tmpl" id="event-results-template">
+    <!--<div data-bind="{events: {click: navigateToEvent}}">
+        <a>${Name}</a>
+    </div>-->
+    <div data-bind="{events: {click: navigateToEvent}}"><a>${Name}</a></div>
 </script>

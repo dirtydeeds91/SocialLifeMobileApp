@@ -22,6 +22,9 @@
             
             that.set("isLoggedIn", global.app.isLoggedIn);
             
+            if(!that.isLoggedIn) {
+                return;
+            }
             var type = e.view.params.type;
             if (type == 1) {
                 if (users.friends.length != 0) {
@@ -35,7 +38,12 @@
                 }
             }
             else if (type == 0) {
-                httpRequest.getJSON(global.app.serviceUrl + global.app.events + "user/" + users.userId + 
+                var userEventsId = users.userId;
+                if(userEventsId == "" || userEventsId == undefined) {
+                    userEventsId = global.app.userId;
+                }
+
+                httpRequest.getJSON(global.app.serviceUrl + global.app.events + "user/" + userEventsId + 
                                     "?sessionKey=" + global.app.sessionKey)
                 .then(function (events) {
                     that.set("areUsersFound", false);

@@ -8,7 +8,6 @@
         areUsersSearched: false,
         search: "",
         users: [],
-        userList: [],
 
         init: function () {
             var that = this;

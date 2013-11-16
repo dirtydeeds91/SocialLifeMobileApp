@@ -5,6 +5,7 @@
     EventViewModel = kendo.data.ObservableObject.extend({
         isLoggedIn: false,
         isAttending: false,
+        isEventFound: false,
         eventId: 0,
         eventName: "",
         content: "",
@@ -27,6 +28,16 @@
             
             if (eventId != "" && eventId != undefined) {
                 that.onGetEventInfo(eventId);
+            }
+            else {
+                that.set("eventId", "");
+                that.set("isEventFound", false);
+                that.set("eventName", "");
+                that.set("content", "");
+                that.set("creator", "");
+                that.set("users", "");
+                that.set("date", "");
+                that.set("status", "");
             }
         },
         
@@ -55,82 +66,11 @@
                             }
                         }
                     }
-                    
+                    that.set("isEventFound", true);
                     kendo.bind($("#update-event-btn"), app.eventService.viewModel);
                 });
             }
         },
-        /*        onUpdate: function () {
-        var that = global.app.profileService.viewModel,
-        password = that.get("password"),
-        displayName = that.get("displayName"),
-        about = that.get("about"),
-        avatar = that.get("avatar"),
-        birthdate = that.get("birthdate"),
-        city = that.get("city"),
-        country = that.get("country"),
-        gender = $('input[name=gender-radio]:checked', '#update-form').val(),
-        mood = that.get("mood"),
-        status = $('input[name=status-radio]:checked', '#update-form').val(),
-        phone = that.get("phone");
-            
-        if (password === "") {
-        navigator.notification.alert("Please enter your password!",
-        function () {
-        }, "Update failed", 'OK');
-
-        return;
-        }
-            
-        if (gender == "Male") {
-        gender = "true";
-        }
-        else if (gender == "Female") {
-        gender = "false";
-        }
-            
-        var data = {
-        "About": about,
-        "Avatar": avatar,
-        "BirthDate": birthdate,
-        "City": city,
-        "Country": country,
-        "Gender": gender,
-        "Mood": mood,
-        "Status": status,
-        "PhoneNumber": phone,
-        "AuthCode": CryptoJS.SHA1(password).toString(),
-        "DisplayName": displayName
-        };
-            
-        var jsonData = JSON.stringify(data);
-            
-        httpRequest.putJSON(global.app.serviceUrl + global.app.profiles + "update?sessionKey=" + global.app.sessionKey, jsonData)
-        .then(function (data) {
-        global.application.navigate("#:back");
-        });
-        },
-        
-        onAddAsFriend: function () {
-        var that = global.app.profileService.viewModel;
-            
-        httpRequest.putJSON(global.app.serviceUrl + global.app.profiles + "add/" + 
-        that.userId + "?sessionKey=" + global.app.sessionKey)
-        .then(function (data) {
-        that.set("isOtherUserFriend", true);
-                
-        var friendsString = global.app.userFriends;
-        if(friendsString == "") {
-        friendsString = that.userId.toString();
-        }
-        else {
-        friendsString = friendsString + ' ' + that.userId.toString();
-        }
-                
-        global.app.userFriends = friendsString;
-        });
-        },
-        */
         
         onAttendButton: function () {
             var that = global.app.eventService.viewModel;
@@ -169,7 +109,7 @@
         
         onUpdateEvent: function () {
             if (this.creator == global.app.displayName) {
-                //global.app.application.navigate("views/lists-view.html#lists-view?type=" + "2", 'slide:left');
+                global.app.application.navigate("views/edit-event-view.html#event-edit?eventId=" + this.eventId, 'slide:left');
             }
             else {
                 navigator.notification.alert("You have to be the creator of the event if you want to update!",
@@ -178,6 +118,44 @@
 
                 return;
             }
+        },
+        
+        onSubmitEventData: function () {
+            var that = global.app.eventService.viewModel;
+            
+            var status = $('input[name=status-radio]:checked', '#event-form').val();
+            //LOCATION!!!!
+            var contentInfo = {"Content": that.content, "Name": that.eventName, "Status": status, "Date": that.date, Longitude: "asd", Latitude: "asd" };
+            
+            var contentJSON = JSON.stringify(contentInfo);
+            
+            var serviceUrl = "";
+            if (that.eventId != "") {
+                serviceUrl = global.app.serviceUrl + global.app.events + "update/" + 
+                             that.eventId + "?sessionKey=" + global.app.sessionKey;
+                that.onUpdateEventQuery(serviceUrl, contentJSON);
+            }
+            else {
+                serviceUrl = global.app.serviceUrl + global.app.events + "create" + 
+                             "?sessionKey=" + global.app.sessionKey;
+                that.onCreateEventQuery(serviceUrl, contentJSON);
+            }
+        },
+        
+        onUpdateEventQuery: function(serviceUrl, contentJSON) {
+            var that = global.app.eventService.viewModel;
+            
+            httpRequest.putJSON(serviceUrl, contentJSON)
+            .then(function (event) {
+                global.app.application.navigate("views/event-view.html#event-view?eventId=" + that.eventId, 'slide:left');
+            });
+        },
+        
+        onCreateEventQuery: function(serviceUrl, contentJSON) {
+            httpRequest.postJSON(serviceUrl, contentJSON)
+            .then(function (event) {
+                global.app.application.navigate("views/event-view.html#event-view?eventId=" + event.EventId, 'slide:left');
+            });
         },
         
         checkEnter: function (e) {

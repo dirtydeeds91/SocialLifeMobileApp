@@ -1,7 +1,7 @@
 <!-- Profile updater -->
 <div id="event-view"
      data-role="view"
-     data-title="Profile"
+     data-title="Event"
      data-layout="new-layout"
      data-model="app.eventService.viewModel"
      data-show="app.eventService.viewModel.onLoad">
@@ -71,7 +71,6 @@
                 </ul>
             </div>
         </div>
-
         <div class="logged-out" data-bind="invisible: isLoggedIn">
             <h1 class="error" data-bind="invisible: isLoggedIn">You are not logged in. Please log in to view events.</h1>
         </div>
@@ -104,12 +103,5 @@
 </div>
 
 <script>
-    var viewModel = kendo.observable({
-        click: function(e) {
-            // stop the browser from navigating to http://example.com
-            e.preventDefault();
-        }
-    });
-
     kendo.bind($("#update-event-btn"), app.eventService.viewModel);
 </script>

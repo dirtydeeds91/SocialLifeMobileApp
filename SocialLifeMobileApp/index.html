@@ -18,6 +18,7 @@
         <script src="scripts/login.js"></script>
         <script src="scripts/profile-update.js"></script>
         <script src="scripts/user-search.js"></script>
+        <script src="scripts/event-search.js"></script>
         <script src="scripts/list-view.js"></script>
         <script src="scripts/events.js"></script>
         <script src="scripts/messages.js"></script>
@@ -174,22 +175,19 @@
                     </ul>
                 </li>
                 <li>
-                    Tasks
+                    Events
                     <ul>
-                        <li>To Do</li>
-                        <li>In Progress</li>
+                        <li data-icon="toprated">
+                            <a href="views/lists-view.html#lists-view?type=0">My events</a>
+                        </li>
+                        <li data-icon="toprated">
+                            <a href="views/search-events-view.html#search-events-view">Search events</a>
+                        </li>
+                        <li data-icon="toprated">
+                            <a href="views/edit-event-view.html#event-edit">Create event</a>
+                        </li>
                     </ul>
                 </li>
-                <!--<li>
-                Account
-                <ul>
-                <li data-icon="settings">Settings</li>
-
-                <li data-icon="off" data-bind="{events: {click: app.loginService.onLogout}}">
-                Log Out
-                </li>
-                </ul>
-                </li>-->
             </ul>
         </div>
     </body>
