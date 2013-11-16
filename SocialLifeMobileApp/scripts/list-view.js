@@ -24,7 +24,6 @@
             
             var type = e.view.params.type;
             if (type == 1) {
-                
                 if (users.friends.length != 0) {
                     that.set("areUsersFound", true);
                     that.set("areEventsFound", false);

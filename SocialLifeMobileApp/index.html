@@ -130,15 +130,15 @@
         <div data-role="layout" data-id="tabstrip-layout">
 
             <!--Header-->
-            <div data-role="header">
+            <header data-role="header">
                 <div data-role="navbar">
                     <a data-role="button" data-rel="drawer" href="#menu-drawer" data-icon="organize" data-align="left"></a>
                     <span data-role="view-title"></span>
                 </div>
-            </div>
+            </header>
 
             <!--Footer-->
-            <div data-role="footer">
+            <footer data-role="footer">
                 <div data-role="tabstrip">
                     <!--<a href="#tabstrip-home" data-icon="home">Home</a>-->
 
@@ -147,7 +147,7 @@
                     <a href="views/update-profile-view.html#profile-update" data-icon="contacts">Update</a>
                     <a href="views/events-view.html#tabstrip-weather" data-icon="toprated">Events</a>
                 </div>
-            </div>
+            </footer>
         </div>
 
         <div data-role="drawer" id="menu-drawer" style="width: 270px">
@@ -181,14 +181,14 @@
                     </ul>
                 </li>
                 <!--<li>
-                    Account
-                    <ul>
-                        <li data-icon="settings">Settings</li>
+                Account
+                <ul>
+                <li data-icon="settings">Settings</li>
 
-                        <li data-icon="off" data-bind="{events: {click: app.loginService.onLogout}}">
-                            Log Out
-                        </li>
-                    </ul>
+                <li data-icon="off" data-bind="{events: {click: app.loginService.onLogout}}">
+                Log Out
+                </li>
+                </ul>
                 </li>-->
             </ul>
         </div>
