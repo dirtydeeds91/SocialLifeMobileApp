@@ -1,0 +1,24 @@
+<div id="lists-view"
+     data-role="view"
+     data-title="Lists"
+     data-model="app.listService.viewModel"
+    data-show="app.listService.viewModel.onLoad">
+    <div class="view-content">
+        <ul data-role="listview"
+            data-style="inset" 
+            data-bind="source: friends, visible: areUsersFound"
+            data-template="user-list-template">
+        </ul>
+    </div>
+</div>
+
+
+<script type="text/x-kendo-tmpl" id="user-list-template">
+    <div data-bind="{events: {click: navigateToUser}}">
+        <a>${DisplayName}</a>
+    </div>
+    <!--<li data-bind="{events: {click: navigateToUser}}">
+    <span>Display name: </span>
+    <span>#: DisplayName #</span>
+    </li>-->
+</script>

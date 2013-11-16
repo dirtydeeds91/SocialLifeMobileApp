@@ -177,6 +177,10 @@
             global.app.application.navigate("views/messages-view.html#messages-view?userId=" + this.userId, 'slide:left');
         },
         
+        onSeeFriends: function () {
+            global.app.application.navigate("views/lists-view.html#lists-view?user=" + "1", 'slide:left');
+        },
+        
         checkEnter: function (e) {
             var that = this;
 

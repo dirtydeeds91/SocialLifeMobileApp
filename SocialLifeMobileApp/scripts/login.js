@@ -37,6 +37,7 @@
                 global.app.sessionKey = data.SessionKey;
                 global.app.userId = data.Id;
                 global.app.displayName = data.DisplayName;
+                that.set("isRegisterPressed", false);
                 that.onLoginSuccess("login");
             });
         },

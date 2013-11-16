@@ -35,7 +35,7 @@
         
         onGetUserMessages: function (userId) {
             var that = global.app.messagesService.viewModel;
-            
+            //var ttt = global.app.profileService.viewModel;
             if (global.app.sessionKey != "" && global.app.sessionKey != undefined) {
                 httpRequest.getJSON(global.app.serviceUrl + global.app.messages + "getpm/" + userId +
                                     "?sessionKey=" + global.app.sessionKey)
