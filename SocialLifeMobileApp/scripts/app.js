@@ -8,9 +8,15 @@
         navigator.splashscreen.hide();
     }, false);
 
-    app.application = new kendo.mobile.Application(document.body, { layout: "tabstrip-layout", statusBarStyle: statusBarStyle });
+    app.application = new kendo.mobile.Application(document.body, 
+                                                  { layout: "tabstrip-layout", 
+                                                    statusBarStyle: statusBarStyle,
+                                                    skin: "flat",
+                                                  });
     app.sessionKey = "";
     app.userId = "";
+    app.displayName = "";
+    app.userFriends = "";
     app.serviceUrl = "http://localhost:22757/api/";
     app.users = "users/";
     app.profiles = "profiles/";

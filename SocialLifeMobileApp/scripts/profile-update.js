@@ -4,6 +4,9 @@
 
     ProfileViewModel = kendo.data.ObservableObject.extend({
         isLoggedIn: false,
+        isOtherUser: true,
+        isOtherUserFriend: false,
+        userId: "",
         displayName: "",
         about: "",
         avatar: "",
@@ -29,13 +32,28 @@
             
             var userId = e.view.params.userId;
             
-            if(userId == undefined) {
+            if (userId == undefined) {
                 userId = global.app.userId;
+                that.set("isOtherUser", false);
             }
+            else {
+                that.set("isOtherUser", true);
+                
+                var userFriends = global.app.userFriends.toString().split(" ");
+                var friendsLen = userFriends.length;
+                
+                for (var i = 0; i < friendsLen; i++) {
+                    if (userFriends[i] == userId) {
+                        that.set("isOtherUserFriend", true);
+                    }
+                }
+            }
+            
             if (global.app.sessionKey != "" && global.app.sessionKey != undefined) {
                 httpRequest.getJSON(global.app.serviceUrl + global.app.profiles + "user/" + userId
                                     + "?sessionKey=" + global.app.sessionKey)
                 .then(function (user) {
+                    that.set("userId", user.UserId);
                     that.set("displayName", user.DisplayName);
                     that.set("about", user.About);
                     that.set("avatar", user.Avatar);
@@ -53,7 +71,6 @@
                     that.set("status", user.Status);
                     that.set("phone", user.PhoneNumber);
                     that.set("friends", user.FriendsList);
-                    var x = 5;
                 });
             }
         },
@@ -63,17 +80,17 @@
         
         onUpdate: function () {
             var that = global.app.profileService.viewModel,
-                       password = that.get("password"),
-                       displayName = that.get("displayName"),
-                       about = that.get("about"),
-                       avatar = that.get("avatar"),
-                       birthdate = that.get("birthdate"),
-                       city = that.get("city"),
-                       country = that.get("country"),
-                       gender = $('input[name=gender-radio]:checked', '#update-form').val(),
-                       mood = that.get("mood"),
-                       status = $('input[name=status-radio]:checked', '#update-form').val(),
-                       phone = that.get("phone");
+            password = that.get("password"),
+            displayName = that.get("displayName"),
+            about = that.get("about"),
+            avatar = that.get("avatar"),
+            birthdate = that.get("birthdate"),
+            city = that.get("city"),
+            country = that.get("country"),
+            gender = $('input[name=gender-radio]:checked', '#update-form').val(),
+            mood = that.get("mood"),
+            status = $('input[name=status-radio]:checked', '#update-form').val(),
+            phone = that.get("phone");
             
             if (password === "") {
                 navigator.notification.alert("Please enter your password!",
@@ -86,7 +103,7 @@
             if (gender == "Male") {
                 gender = "true";
             }
-            else if(gender == "Female") {
+            else if (gender == "Female") {
                 gender = "false";
             }
             
@@ -108,8 +125,56 @@
             
             httpRequest.putJSON(global.app.serviceUrl + global.app.profiles + "update?sessionKey=" + global.app.sessionKey, jsonData)
             .then(function (data) {
-                var x = 5;
+                global.application.navigate("#:back");
             });
+        },
+        
+        onAddAsFriend: function () {
+            var that = global.app.profileService.viewModel;
+            
+            httpRequest.putJSON(global.app.serviceUrl + global.app.profiles + "add/" + 
+                                that.userId + "?sessionKey=" + global.app.sessionKey)
+            .then(function (data) {
+                that.set("isOtherUserFriend", true);
+                
+                var friendsString = global.app.userFriends;
+                if(friendsString == "") {
+                    friendsString = that.userId.toString();
+                }
+                else {
+                    friendsString = friendsString + ' ' + that.userId.toString();
+                }
+                
+                global.app.userFriends = friendsString;
+            });
+        },
+        
+        onRemoveFriend: function () {
+            var that = global.app.profileService.viewModel;
+            
+            httpRequest.putJSON(global.app.serviceUrl + global.app.profiles + "remove/" + 
+                                that.userId + "?sessionKey=" + global.app.sessionKey)
+            .then(function (data) {
+                that.set("isOtherUserFriend", false);
+                
+                var userFriends = global.app.userFriends.toString().split(" ");
+                var friendsLen = userFriends.length;
+                global.app.userFriends = "";
+                for (var i = 0; i < friendsLen; i++) {
+                    if (userFriends[i] != that.userId) {
+                        if (global.app.userFriends == undefined || global.app.userFriends == "") {
+                            global.app.userFriends = userFriends[i].toString();
+                        }
+                        else {
+                            global.app.userFriends = global.app.userFriend + ' ' + userFriends[i].Id.toString();
+                        }
+                    }
+                }
+            });
+        },
+        
+        onOpenMessages: function () {
+            global.app.application.navigate("views/messages-view.html#messages-view?userId=" + this.userId, 'slide:left');
         },
         
         checkEnter: function (e) {

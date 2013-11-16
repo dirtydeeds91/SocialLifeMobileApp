@@ -6,7 +6,7 @@
      data-show="app.userService.viewModel.onLoad">
     <div class="view-content">
         <div class="users-info" data-bind="visible: isLoggedIn">
-            <ul data-role="listview" data-style="inset">
+            <ul class="white-form" data-role="listview" data-style="inset">
                 <li>
                     <label>
                         Search for users
@@ -21,10 +21,14 @@
                     </div>
                 </li>
             </ul>
-            <div data-bind="visible: areUsersFound">
+            <div data-bind="visible: areUsersSearched">
                 <h1>Results:</h1>
-                <ul data-role="listview" data-style="inset" 
-                    data-bind="source: users" data-template="users-template"></ul>
+                <h1 data-bind="invisible: areUsersFound">No users found.</h1>
+                <ul data-role="listview"
+                    data-style="inset" 
+                    data-bind="source: users, visible: areUsersFound"
+                    data-template="users-template">
+                </ul>
             </div>
         </div>
         <div class="logged-out" data-bind="invisible: isLoggedIn">
@@ -33,9 +37,12 @@
     </div>
 </div>
 
-<script id="users-template" type="text/x-kendo-template">
-    <li data-bind="{events: {click: navigateToUser}}">
-        <span>Display name: </span>
-        <span>#: DisplayName #</span>
-    </li>
+<script type="text/x-kendo-tmpl" id="users-template">
+    <div data-bind="{events: {click: navigateToUser}}">
+        <span>${DisplayName}</span>
+    </div>
+    <!--<li data-bind="{events: {click: navigateToUser}}">
+    <span>Display name: </span>
+    <span>#: DisplayName #</span>
+    </li>-->
 </script>

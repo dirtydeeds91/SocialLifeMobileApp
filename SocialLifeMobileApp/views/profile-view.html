@@ -7,7 +7,18 @@
     <div class="view-content">
         <div class="user-info"  data-bind="visible: isLoggedIn">
             <div id="user-details" data-role="tabstrip">
-                <img id="avatar" data-bind="attr: { src: avatar }" alt="Profile picture" />
+                <img id="avatar" style="width: 50%" data-bind="attr: { src: avatar }" alt="Profile picture" />
+            </div>
+            <div class="buttonArea" data-bind="visible: isOtherUser">
+                <input type="submit" class="addfriend" 
+                       data-role="button" data-bind="click: onAddAsFriend, invisible: isOtherUserFriend" 
+                       class="add-button" value="Add friend" />
+                <input type="submit" class="removefriend" 
+                       data-role="button" data-bind="click: onRemoveFriend, visible: isOtherUserFriend" 
+                       class="remove-button" value="Remove friend" />
+                <input type="submit" class="message" 
+                       data-role="button" data-bind="click: onOpenMessages, visible: isOtherUserFriend" 
+                       class="message-button" value="Messages" />
             </div>
             <div>
                 <ul data-role="listview" data-style="inset" data-type="group">
@@ -16,6 +27,14 @@
                         <ul>
                             <li>
                                 <span data-bind="text: displayName"></span>
+                            </li>
+                        </ul>
+                    </li>
+                    <li>
+                        Friends
+                        <ul>
+                            <li>
+                                <a>See friends</a>
                             </li>
                         </ul>
                     </li>

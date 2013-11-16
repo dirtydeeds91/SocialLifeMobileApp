@@ -5,12 +5,14 @@
     UsersViewModel = kendo.data.ObservableObject.extend({
         isLoggedIn: false,
         areUsersFound: false,
+        areUsersSearched: false,
         search: "",
         users: [],
+        userList: [],
 
         init: function () {
             var that = this;
-
+            
             kendo.data.ObservableObject.fn.init.apply(that, []);
         },
         
@@ -26,9 +28,14 @@
                 httpRequest.getJSON(global.app.serviceUrl + global.app.profiles + "search?username=" + that.search
                                     + "&sessionKey=" + global.app.sessionKey)
                 .then(function (users) {
-                    that.set("areUsersFound", true);
-                    that.set("users", users);
-                    var x = 5;
+                    that.set("areUsersSearched", true);
+                    if (users.length != 0) {
+                        that.set("areUsersFound", true);
+                        that.set("users", users);
+                    }
+                    else {
+                        that.set("areUsersFound", false);
+                    }
                 });
             }
         },

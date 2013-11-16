@@ -66,10 +66,32 @@ window.httpRequest = (function(){
         return promise;
     }
     
+    function putNoJSON(url) {
+        var promise = new RSVP.Promise(function(resolve, reject){
+            $.ajax({
+                url:url,
+                type:"PUT",
+                contentType:"application/json",
+                timeout:5000,
+                success:function(data){
+                    resolve(data);
+                },
+                error:function(request, status, error) {
+                    var errorMsg = JSON.parse(request.responseText);
+                    navigator.notification.alert(errorMsg.Message + " " + errorMsg.ExceptionMessage,
+                                                 function() {
+                                                 }, "Put request failed.", 'OK');
+                }
+            });
+        });
+        return promise;
+    }
+    
     
     return {
         getJSON:getJSON,
         postJSON:postJSON,
-        putJSON:putJSON
+        putJSON:putJSON,
+        putNoJSON: putNoJSON,
     };    
 }());

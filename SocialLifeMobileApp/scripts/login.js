@@ -36,6 +36,7 @@
             .then(function (data) {
                 global.app.sessionKey = data.SessionKey;
                 global.app.userId = data.Id;
+                global.app.displayName = data.DisplayName;
                 that.onLoginSuccess("login");
             });
         },
@@ -81,6 +82,8 @@
                     global.app.sessionKey = data.SessionKey;
                     
                     global.app.userId = data.Id;
+                    
+                    global.app.displayName = data.DisplayName;
                     
                     that.set("isRegisterPressed", false);
                     
@@ -128,6 +131,16 @@
                     };
                     that.set("profile", userProfile);
                     
+                    var friendsLength = that.profile.friends.length;
+                    
+                    for (var i = 0; i < friendsLength; i++) {
+                        if (global.app.userFriends == undefined || global.app.userFriends == "") {
+                            global.app.userFriends = that.profile.friends[i].Id.toString();
+                        }
+                        else {
+                            global.app.userFriends = global.app.userFriends + ' ' + that.profile.friends[i].Id;
+                        }
+                    }
                     global.app.isLoggedIn = true;
                     that.set("isLoggedIn", true);
                 });
