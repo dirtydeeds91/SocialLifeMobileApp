@@ -9,9 +9,19 @@
             data-bind="source: friends, visible: areUsersFound"
             data-template="user-list-template">
         </ul>
+        <ul data-role="listview"
+            data-style="inset" 
+            data-bind="source: events, visible: areEventsFound"
+            data-template="event-list-template">
+        </ul>
     </div>
 </div>
 
+<script type="text/x-kendo-tmpl" id="event-list-template">
+    <div data-bind="{events: {click: navigateToEvent}}">
+        <a>${Name}</a>
+    </div>
+</script>
 
 <script type="text/x-kendo-tmpl" id="user-list-template">
     <div data-bind="{events: {click: navigateToUser}}">

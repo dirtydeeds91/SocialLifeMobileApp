@@ -1,24 +1,16 @@
 (function (global) {
-    var ProfileViewModel,
+    var EventViewModel,
     app = global.app = global.app || {};
 
-    ProfileViewModel = kendo.data.ObservableObject.extend({
+    EventViewModel = kendo.data.ObservableObject.extend({
         isLoggedIn: false,
-        isOtherUser: true,
-        isOtherUserFriend: false,
-        userId: "",
-        displayName: "",
-        about: "",
-        avatar: "",
-        birthdate: "",
-        city: "",
-        country: "",
-        gender: "",
-        mood: "",
+        eventId: 0,
+        eventName: "",
+        content: "",
+        users: [],
+        creator: "",
+        date: "",
         status: "",
-        phone: "",
-        friends: [],
-        password: "",
 
         init: function () {
             var that = this;
@@ -26,59 +18,29 @@
             kendo.data.ObservableObject.fn.init.apply(that, []);
         },
         
-        load: function (e) {
-            var that = global.app.profileService.viewModel;
+        onLoad: function (e) {
+            var that = global.app.eventService.viewModel;
             that.set("isLoggedIn", global.app.isLoggedIn);
             
-            var userId = e.view.params.userId;
-            
-            if (userId == undefined) {
-                userId = global.app.userId;
-                that.set("isOtherUser", false);
-            }
-            else {
-                that.set("isOtherUser", true);
-                
-                var userFriends = global.app.userFriends.toString().split(" ");
-                var friendsLen = userFriends.length;
-                
-                for (var i = 0; i < friendsLen; i++) {
-                    if (userFriends[i] == userId) {
-                        that.set("isOtherUserFriend", true);
-                    }
-                }
-            }
+            var eventId = e.view.params.eventId;
             
             if (global.app.sessionKey != "" && global.app.sessionKey != undefined) {
-                httpRequest.getJSON(global.app.serviceUrl + global.app.profiles + "user/" + userId
+                httpRequest.getJSON(global.app.serviceUrl + global.app.events + "get/" + eventId
                                     + "?sessionKey=" + global.app.sessionKey)
-                .then(function (user) {
-                    that.set("userId", user.UserId);
-                    that.set("displayName", user.DisplayName);
-                    that.set("about", user.About);
-                    that.set("avatar", user.Avatar);
-                    var dateString = new Date(user.BirthDate).toDateString();
-                    that.set("birthdate", dateString);
-                    that.set("city", user.City);
-                    that.set("country", user.Country);
-                    if (user.Gender == true) {
-                        that.set("gender", "Male");
-                    }
-                    else {
-                        that.set("gender", "Female");
-                    }
-                    that.set("mood", user.Mood);
-                    that.set("status", user.Status);
-                    that.set("phone", user.PhoneNumber);
-                    that.set("friends", user.FriendsList);
+                .then(function (event) {
+                    that.set("eventId", eventId);
+                    that.set("eventName", event.Name);
+                    that.set("content", event.Content);
+                    that.set("creator", event.CreatorName);
+                    that.set("users", event.UsersList);
+                    var dateString = new Date(event.Date).toDateString();
+                    that.set("date", dateString);
+                    that.set("status", event.Status);
                 });
             }
         },
         
-        takePicture: function () {
-        },
-        
-        onUpdate: function () {
+/*        onUpdate: function () {
             var that = global.app.profileService.viewModel,
             password = that.get("password"),
             displayName = that.get("displayName"),
@@ -171,18 +133,18 @@
                     }
                 }
             });
+        },*/
+        
+        onSeeMessages: function () {
+            global.app.application.navigate("views/messages-view.html#messages-view?eventId=" + this.eventId, 'slide:left');
         },
         
-        onOpenMessages: function () {
-            global.app.application.navigate("views/messages-view.html#messages-view?userId=" + this.userId, 'slide:left');
+        onSeeUsers: function () {
+            global.app.application.navigate("views/lists-view.html#lists-view?type=" + "2", 'slide:left');
         },
         
-        onSeeFriends: function () {
-            global.app.application.navigate("views/lists-view.html#lists-view?type=" + "1", 'slide:left');
-        },
-        
-        onSeeEvents: function () {
-            global.app.application.navigate("views/lists-view.html#lists-view?type=" + "0", 'slide:left');
+        navigateToUser: function () {
+            
         },
         
         checkEnter: function (e) {
@@ -195,7 +157,7 @@
         }
     });
 
-    app.profileService = {
-        viewModel: new ProfileViewModel(),
+    app.eventService = {
+        viewModel: new EventViewModel(),
     };
 })(window);

@@ -18,11 +18,16 @@
         onLoad: function (e) {
             var that = global.app.listService.viewModel;
             
-            var user = e.view.params.user;
-            if(user) {
-                var users = global.app.profileService.viewModel;
-                if(users.friends.length != 0) {
+            var users = global.app.profileService.viewModel;
+            
+            that.set("isLoggedIn", global.app.isLoggedIn);
+            
+            var type = e.view.params.type;
+            if (type == 1) {
+                
+                if (users.friends.length != 0) {
                     that.set("areUsersFound", true);
+                    that.set("areEventsFound", false);
                     that.set("friends", users.friends);
                 }
                 else {
@@ -30,15 +35,41 @@
                     that.set("friends", []);
                 }
             }
-            else {
-                var events = 5;
-                //check events
+            else if (type == 0) {
+                httpRequest.getJSON(global.app.serviceUrl + global.app.events + "user/" + users.userId + 
+                                    "?sessionKey=" + global.app.sessionKey)
+                .then(function (events) {
+                    that.set("areUsersFound", false);
+                    if (events.length != 0) {
+                        that.set("areEventsFound", true);
+                        that.set("events", events);
+                    }
+                    else {
+                        that.set("areEventsFound", false);
+                    }
+                });
             }
-            that.set("isLoggedIn", global.app.isLoggedIn);
+            else if (type == 2) {
+                users = global.app.eventService.viewModel;
+                
+                if (users.users.length != 0) {
+                    that.set("areEventsFound", false);
+                    that.set("areUsersFound", true);
+                    that.set("friends", users.users);
+                }
+                else {
+                    that.set("areUsersFound", false);
+                    that.set("friends", []);
+                }
+            }
         },
 
         navigateToUser: function (e) {
             global.app.application.navigate("views/profile-view.html#profile-view?userId=" + e.data.Id, 'slide:left');
+        },
+        
+        navigateToEvent: function (e) {
+            global.app.application.navigate("views/event-view.html#event-view?eventId=" + e.data.EventId, 'slide:left');
         },
     });
 

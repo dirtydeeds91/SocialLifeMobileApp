@@ -22,14 +22,18 @@
             that.set("isLoggedIn", global.app.isLoggedIn);
             
             var userId = e.view.params.userId;
-            if (userId != "") {
+            if (userId != "" && userId != undefined) {
+                that.set("isEventMessages", false);
                 that.set("userEventId", userId);
                 that.onGetUserMessages(userId);
             }
             else {
-                //EVENT MESSAGES!!!
-                that.set("isEventMessages", true);
-                //onGetEventMessages(eventId);
+                var eventId = e.view.params.eventId;
+                if (eventId != "") {
+                    that.set("isEventMessages", true);
+                    that.set("userEventId", eventId);
+                    that.onGetEventMessages(eventId);
+                }
             }
         },
         
@@ -41,7 +45,6 @@
                                     "?sessionKey=" + global.app.sessionKey)
                 .then(function (messages) {
                     if (messages.length != 0) {
-                        that.set("isEventMessages", false);
                         that.set("areMessagesReceived", true);
                         that.set("messages", messages);
                         if (messages[0].Sender == global.app.displayName) {
@@ -56,7 +59,7 @@
             }
         },
         
-        onSendUserMessage: function() {
+        onSendMessage: function() {
             var that = global.app.messagesService.viewModel;
             
             if (that.messageToSend === "") {
@@ -69,19 +72,55 @@
             
             var dateNow = new Date();
             var date = dateNow.toLocaleDateString() + " " + dateNow.toLocaleTimeString();
-            var messageInfo = {
-                Content: that.messageToSend,
-                Date: date,
-                ReceiverId: that.userEventId
-            };
+            var messageInfo = {};
+            var url = ""
+            if (that.isEventMessages) {
+                messageInfo = {
+                    Content: that.messageToSend,
+                    Date: date,
+                    EventId: that.userEventId
+                };
+                url = "postevent";
+            }
+            else {
+                messageInfo = {
+                    Content: that.messageToSend,
+                    Date: date,
+                    ReceiverId: that.userEventId
+                };
+                url = "postpm";
+            }
             
             var msgJSON = JSON.stringify(messageInfo);
             
-            httpRequest.postJSON(global.app.serviceUrl + global.app.messages + "postpm" +
+            httpRequest.postJSON(global.app.serviceUrl + global.app.messages + url +
                                  "?sessionKey=" + global.app.sessionKey, msgJSON)
-                .then(function (data) {
+            .then(function (data) {
+                that.set("messageToSend", "");
+                if (that.isEventMessages) {
+                    that.onGetEventMessages(that.userEventId);
+                }
+                else {
                     that.onGetUserMessages(that.userEventId);
+                }
+            });
+        },
+        
+        onGetEventMessages: function(eventId) {
+            var that = global.app.messagesService.viewModel;
+            if (global.app.sessionKey != "" && global.app.sessionKey != undefined) {
+                httpRequest.getJSON(global.app.serviceUrl + global.app.messages + "getevent/" + eventId +
+                                    "?sessionKey=" + global.app.sessionKey)
+                .then(function (messages) {
+                    if (messages.length != 0) {
+                        that.set("isEventMessages", true);
+                        that.set("areMessagesReceived", true);
+                        that.set("messages", messages);
+                        that.set("otherUser", messages[0].Event);
+                        //$('.km-scroll-wrapper').scrollTo($('#write-message'), 0);
+                    }
                 });
+            }
         }
     });
 

@@ -1,0 +1,78 @@
+<!-- Profile updater -->
+<div id="event-view"
+     data-role="view"
+     data-title="Profile"
+     data-model="app.eventService.viewModel"
+     data-show="app.eventService.viewModel.onLoad">
+    <div class="view-content">
+        <div class="event-info"  data-bind="visible: isLoggedIn">
+            <div id="event-details" data-role="tabstrip">
+                <img id="avatar" style="width: 50%" data-bind="attr: { src: avatar }" alt="Profile picture" />
+            </div>
+            <div class="buttonArea" data-bind="visible: isOtherUser">
+                <input type="submit" class="addfriend" 
+                       data-role="button" data-bind="click: onAddAsFriend, invisible: isOtherUserFriend" 
+                       class="add-button" value="Attend" />
+                <input type="submit" class="removefriend" 
+                       data-role="button" data-bind="click: onRemoveFriend, visible: isOtherUserFriend" 
+                       class="remove-button" value="Not attending" />
+            </div>
+            <div>
+                <ul data-role="listview" data-style="inset" data-type="group">
+                    <li>
+                        Details
+                        <ul>
+                            <li>
+                                <span data-bind="text: content"></span>
+                            </li>
+                        </ul>
+                    </li>
+                    <li>
+                        Attendees
+                        <ul>
+                            <li>
+                                <a data-bind="click: onSeeUsers">See users</a>
+                            </li>
+                        </ul>
+                    </li>
+                    <li>
+                        Creator
+                        <ul>
+                            <li>
+                                <a data-bind="click: navigateToUser, text: creator"></a>
+                            </li>
+                        </ul>
+                    </li>
+                    <li>
+                        Event messages
+                        <ul>
+                            <li>
+                                <a data-bind="click: onSeeMessages">See messages</a>
+                            </li>
+                        </ul>
+                    </li>
+                    <li>
+                        Date
+                        <ul>
+                            <li>
+                                <span data-bind="text: date"></span>
+                            </li>
+                        </ul>
+                    </li>
+                    <li>
+                        Status
+                        <ul>
+                            <li>
+                                <span data-bind="text: status"></span>
+                            </li>
+                        </ul>
+                    </li>
+                </ul>
+            </div>
+        </div>
+
+        <div class="logged-out" data-bind="invisible: isLoggedIn">
+            <h1 class="error" data-bind="invisible: isLoggedIn">You are not logged in. Please log in to view events.</h1>
+        </div>
+    </div>
+</div>
