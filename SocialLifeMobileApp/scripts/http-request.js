@@ -1,13 +1,13 @@
-window.httpRequest = (function(){
-    function getJSON(url){
-        var promise = new RSVP.Promise(function(resolve, reject){
+window.httpRequest = (function() {
+    function getJSON(url) {
+        var promise = new RSVP.Promise(function(resolve, reject) {
             $.ajax({
                 url:url,
                 type:"GET",
                 dataType:"json",
                 contentType:"application/json",
                 timeout:5000,
-                success:function(data){
+                success:function(data) {
                     resolve(data);
                 },
                 error:function(request, status, error) {
@@ -22,7 +22,7 @@ window.httpRequest = (function(){
     }
     
     function postJSON(url, postdata) {
-        var promise = new RSVP.Promise(function(resolve, reject){
+        var promise = new RSVP.Promise(function(resolve, reject) {
             $.ajax({
                 url:url,
                 type:"POST",
@@ -30,7 +30,7 @@ window.httpRequest = (function(){
                 dataType:"json",
                 contentType:"application/json",
                 timeout:5000,
-                success:function(data){
+                success:function(data) {
                     resolve(data);
                 },
                 error:function(request, status, error) {
@@ -45,14 +45,14 @@ window.httpRequest = (function(){
     }
     
     function putJSON(url, putdata) {
-        var promise = new RSVP.Promise(function(resolve, reject){
+        var promise = new RSVP.Promise(function(resolve, reject) {
             $.ajax({
                 url:url,
                 type:"PUT",
                 data: putdata,
                 contentType:"application/json",
                 timeout:5000,
-                success:function(data){
+                success:function(data) {
                     resolve(data);
                 },
                 error:function(request, status, error) {
@@ -67,13 +67,13 @@ window.httpRequest = (function(){
     }
     
     function putNoJSON(url) {
-        var promise = new RSVP.Promise(function(resolve, reject){
+        var promise = new RSVP.Promise(function(resolve, reject) {
             $.ajax({
                 url:url,
                 type:"PUT",
                 contentType:"application/json",
                 timeout:5000,
-                success:function(data){
+                success:function(data) {
                     resolve(data);
                 },
                 error:function(request, status, error) {
@@ -87,11 +87,37 @@ window.httpRequest = (function(){
         return promise;
     }
     
+    function postImage(url, postdata) {
+        var promise = new RSVP.Promise(function(resolve, reject) {
+            $.ajax({
+                url:url,
+                type:"POST",
+                data: postdata,
+                dataType:"json",
+                headers: {
+                    "Authorization": "Client-ID 9a95fd186abaafa"
+                },
+                contentType:"application/json",
+                timeout:5000,
+                success:function(data) {
+                    resolve(data);
+                },
+                error:function(request, status, error) {
+                    var errorMsg = JSON.parse(request.responseText);
+                    navigator.notification.alert(errorMsg.Message + " " + errorMsg.ExceptionMessage,
+                                                 function() {
+                                                 }, "Post request failed.", 'OK');
+                }
+            });
+        });
+        return promise;
+    }
     
     return {
         getJSON:getJSON,
         postJSON:postJSON,
         putJSON:putJSON,
         putNoJSON: putNoJSON,
+        postImage: postImage,
     };    
 }());

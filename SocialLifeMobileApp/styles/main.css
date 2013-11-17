@@ -1,31 +1,81 @@
-body, html {
+body, html
+{
     margin: 0;
     height: 100%;
     width: 100%;
 }
 
+#friends-message
+{
+    resize: none;
+    float: left;
+    width: 100%;
+}
+
+#avatar, #event-image
+{
+    width: 5em;
+    height: 5em;
+    float: left;
+    margin: 1em;
+    -webkit-box-shadow: 0 1px 3px #333;
+    box-shadow: 0 1px 3px #333;
+    -webkit-border-radius: 8px;
+    border-radius: 8px;
+}
+
+.avatar, #user-details
+{
+    background: #1a1a1a;
+}
+
+.avatar > div, #user-details > div
+{
+    color: #fcfcfc;
+    line-height: 5em;
+}
+
+#friends-message-label
+{
+    float: left;
+}
+
+#update-form
+{
+    clear: both;
+}
+
+#update-form ul
+{
+    background: #fcfcfc;
+}
 /* COMMON STYLES*/
-.view-content h1 {
+.view-content h1
+{
     color: #42454a;
     font-size: 1.8em;
 }
 
-.view-content h1.welcome, .view-content h1.error {
+.view-content h1.welcome, .view-content h1.error
+{
     text-align: center;
 }
 
-.view-content h3 {
+.view-content h3
+{
     color: #42454a;
     font-size: 1.1em;
 }
 
-.view-content p {
+.view-content p
+{
     color: #4a4e54;
     font-size: 1em;
 }
 
 /* IMAGE STYLES*/
-.img {
+.img
+{
     background-image: url(../styles/images/icenium.png);
     background-repeat: no-repeat;
     text-align: center;
@@ -34,7 +84,8 @@ body, html {
     margin: 0px auto;
 }
 
-.logo {
+.logo
+{
     background-image: url(../styles/images/logo.png);
     background-repeat: no-repeat;
     width: 85px;
@@ -42,30 +93,53 @@ body, html {
     margin: 20px auto;
 }
 
-.white-form {
+.white-form
+{
     background: #fcfcfc;
 }
 /* BUTTON STYLES*/
-.buttonArea {
+.buttonArea
+{
     text-align: center;
 }
 
-.login-button, .register-button, .update-button {
+.buttonArea > input {
+    display: block;
+    margin: 5px auto;
+}
+
+.login-button, .register-button, .update-button, .camera-button
+{
     width: 50%;
     max-width: 300px;
     font-size: .9em;
     -webkit-appearance: none;
 }
 
+.user-info .avatar > div .camera {
+    font-size: 0.92em;
+    background: rgb(220,220,220);
+    color: #1a1a1a;
+    border: 1px solid rgba(0,0,0,0.1);
+    border-radius: 3px;
+    -moz-border-radius: 3px;
+    -webkit-border-radius: 3px;
+}
+
+.user-details .km-list {
+    background: #fcfcfc;
+}
 /* MAP STYLES*/
-#no-map {
+#no-map
+{
     position: absolute;
     margin: 0 auto;
-    top: 40%;    
+    top: 40%; 
     text-align: center;
 }
 
-#map-canvas {
+#map-canvas
+{
     position: absolute;
     top: 0;
     bottom: 0;
@@ -73,7 +147,8 @@ body, html {
     right: 0;
 }
 
-#map-search-wrap {
+#map-search-wrap
+{
     position: absolute;
     z-index: 10;
     background-color: rgba(0, 0, 0, 0.5);
@@ -82,7 +157,8 @@ body, html {
     -webkit-box-sizing: border-box;
 }
 
-#map-address {
+#map-address
+{
     position: absolute;
     left: 0;
     right: 0;
@@ -102,7 +178,8 @@ body, html {
     background-clip: border-box;
 }
 
-#map-search {
+#map-search
+{
     float: right;
     width: 40px;
     height: 40px;
@@ -114,12 +191,14 @@ body, html {
     background-position: center center;
 }
 
-#map-search:active {
+#map-search:active
+{
     background-image: url(../styles/images/search_active.png);
     background-repeat: no-repeat;
 }
 
-#map-navigate-home {
+#map-navigate-home
+{
     float: left;
     width: 40px;
     height: 40px;
@@ -131,17 +210,20 @@ body, html {
     background-position: center center;
 }
 
-#map-navigate-home:active {
+#map-navigate-home:active
+{
     background-image: url(../styles/images/location_active.png);
     background-repeat: no-repeat;
 }
 
 /* WEATHER STYLES*/
-.weather, .messages {
-    padding-top:50px;
+.weather, .messages
+{
+    padding-top: 50px;
 }
 
-.weather .weather-title {
+.weather .weather-title
+{
     color: #fff;
     font-size: 1.5em;
     line-height: 1.2em;
@@ -155,11 +237,14 @@ body, html {
     width: 100%;
 }
 
-.single-message {
-    border: 1px solid rgba(0,0,0,0.1);
+.single-message
+{
+    background: #fcfcfc;
+    border: 1px solid rgba(0, 0, 0, 0.1);
     border-radius: 0 0 3px 3px;
 }
-.messages .messages-title {
+.messages .messages-title
+{
     font-size: 1.5em;
     line-height: 1.2em;
     text-shadow: none;
@@ -172,7 +257,8 @@ body, html {
     width: 100%;
 }
 
-.weather-info {
+.weather-info
+{
     color: #fff;
     font-size: 1.2em;
     text-shadow: none;
@@ -180,7 +266,8 @@ body, html {
     display: inline-block;
 }
 
-.message-text {
+.message-text
+{
     font-size: 1.4em;
     text-shadow: none;
     line-height: 1.8em;
@@ -188,7 +275,8 @@ body, html {
     margin: 7px;
 }
 
-.message-info {
+.message-info
+{
     text-shadow: none;
     line-height: 1.4em;
     display: inline-block;
@@ -196,43 +284,50 @@ body, html {
     text-align: right;
 }
 
-.message-status {
+.message-status
+{
     font-size: 0.8em;
     display: inline-block;
     margin-left: 7px;
 }
 
-.weather-info.date {
+.weather-info.date
+{
     margin-top: 7px;
 }
 
-.weather-info.temperature {
+.weather-info.temperature
+{
     margin-left: 5px;
 }
 
-.weather-info.temperature.low {
-    color: rgba(0,0,0,0.5);
+.weather-info.temperature.low
+{
+    color: rgba(0, 0, 0, 0.5);
 }
 
-#message-div {
-    border: 1px solid rgba(0,0,0,0.1);
+#message-div
+{
+    border: 1px solid rgba(0, 0, 0, 0.1);
     border-radius: 3px 3px;
     background: #fcfcfc;
     margin: 0 .5em;
     padding: .3em;
 }
 
-#message-input {
+#message-input
+{
     padding: .4em;
     border: 0;
     outline: 0;
     background: transparent;
     width: 75%;
-    font: normal 1em "HelveticaNeue Light","Roboto Light","Slate Light","Segoe WP",NokiaPureTextLight,sans-serif;
+    font: normal 1em "HelveticaNeue Light", "Roboto Light", "Slate Light", "Segoe WP", NokiaPureTextLight, sans-serif;
 }
 
 /* Weather Icons*/
-.weather-icon, .messages-icon {
+.weather-icon, .messages-icon
+{
     width: 64px;
     height: 64px;
     background-image: url(../styles/images/sprite-weather.png);
@@ -243,131 +338,155 @@ body, html {
     left: -10px;
 }
 
-.weather-icon.sunny {
+.weather-icon.sunny
+{
     background-position: 0px 0px;
 }
 
-.weather-icon.cloudy {
+.weather-icon.cloudy
+{
     background-position: 0px -64px;
 }
 
-.weather-icon.partly-cloudy {
+.weather-icon.partly-cloudy
+{
     background-position: 0px -128px;
 }
 
-.weather-icon.partly-sunny {
+.weather-icon.partly-sunny
+{
     background-position: 0px -192px;
 }
 
-.weather-icon.shower {
+.weather-icon.shower
+{
     background-position: 0px -256px;
 }
 
-.weather-icon.foggy {
+.weather-icon.foggy
+{
     background-position: 0px -320px;
 }
 
-.weather-icon.storm {
+.weather-icon.storm
+{
     background-position: 0px -384px;
 }
 
-.position-left {
+.position-left
+{
     float: left;
 }
 
-.position-right {
+.position-right
+{
     float: right;
 }
 
-.position.center {
+.position.center
+{
     position: absolute;
     margin: 0 auto;
     width: 100%;
 }
 
 /* DEVICE SPECIFIC STYLES*/
-#skin-change {
+#skin-change
+{
     position: absolute;
     right: 10px;
     top: 10px;
 }
 
-.km-ios .km-listview-wrapper .km-listinset li {
+.km-ios .km-listview-wrapper .km-listinset li
+{
     background-color: #fff;
     border-color: #ababab;
 }
 
-.km-ios .km-view .km-content {
+.km-ios .km-view .km-content
+{
     background-image: none;
     background: #f0f0f0;
 }
 
-.km-tablet .km-ios .km-navbar .km-view-title {
+.km-tablet .km-ios .km-navbar .km-view-title
+{
     color: #000;
-    text-shadow: 0 -1px rgba(255,255,255,0.3);
+    text-shadow: 0 -1px rgba(255, 255, 255, 0.3);
 }
 
-.km-android .view-content h1 {
+.km-android .view-content h1
+{
     color: #8a8b8f;
 }
 
 .km-android .view-content p,
-.km-android .view-content h3 {
+.km-android .view-content h3
+{
     color: #2e5968;
 }
 
-.km-android .weather-info.temperature.low {
+.km-android .weather-info.temperature.low
+{
     color: #2e5968;
 }
 
-.km-ios .km-view .weather {
+.km-ios .km-view .weather
+{
     background: #5fb4ed; /* Old browsers */
     background: -moz-linear-gradient(top, #5fb4ed 0%, #0076c5 74%); /* FF3.6+ */
-    background: -webkit-gradient(linear, left top, left bottom, color-stop(0%,#5fb4ed), color-stop(74%,#0076c5)); /* Chrome,Safari4+ */
-    background: -webkit-linear-gradient(top, #5fb4ed 0%,#0076c5 74%); /* Chrome10+,Safari5.1+ */
-    background: -o-linear-gradient(top, #5fb4ed 0%,#0076c5 74%); /* Opera 11.10+ */
-    background: -ms-linear-gradient(top, #5fb4ed 0%,#0076c5 74%); /* IE10+ */
-    background: linear-gradient(to bottom, #5fb4ed 0%,#0076c5 74%); /* W3C */
+    background: -webkit-gradient(linear, left top, left bottom, color-stop(0%, #5fb4ed), color-stop(74%, #0076c5)); /* Chrome,Safari4+ */
+    background: -webkit-linear-gradient(top, #5fb4ed 0%, #0076c5 74%); /* Chrome10+,Safari5.1+ */
+    background: -o-linear-gradient(top, #5fb4ed 0%, #0076c5 74%); /* Opera 11.10+ */
+    background: -ms-linear-gradient(top, #5fb4ed 0%, #0076c5 74%); /* IE10+ */
+    background: linear-gradient(to bottom, #5fb4ed 0%, #0076c5 74%); /* W3C */
 }
 .km-ios7 .km-view .weather,
-.km-flat .km-view .weather {
+.km-flat .km-view .weather
+{
     background: #b0b0b0;
 }
 
-.km-flat .km-list > li {
+.km-flat .km-list > li
+{
     box-shadow: none;
 }
 
 .km-ios .km-list > li,
-.km-flat .km-list > li {
+.km-flat .km-list > li
+{
     background: none;
     border: none;
 }
 
-ul .km-group-container > .km-group-title {
+#first-drawer-item
+{
     border-top: 2em solid #efeff4;
 }
 /* Separator Style*/
-.separator > .dark {
-    background: -moz-linear-gradient(left, rgba(0,0,0,0) 0%, rgba(0,0,0,0.2) 30%, rgba(0,0,0,0.2) 50%, rgba(0,0,0,0.2) 70%, rgba(0,0,0,0) 100%);
-    background: -webkit-gradient(linear, left top, right top, color-stop(0%,rgba(0,0,0,0)), color-stop(30%,rgba(0,0,0,0.2)), color-stop(50%,rgba(0,0,0,0.2)), color-stop(70%,rgba(0,0,0,0.2)), color-stop(100%,rgba(0,0,0,0)));
-    background: -webkit-linear-gradient(left, rgba(0,0,0,0) 0%,rgba(0,0,0,0.2) 30%,rgba(0,0,0,0.2) 50%,rgba(0,0,0,0.2) 70%,rgba(0,0,0,0) 100%);
-    background: -o-linear-gradient(left, rgba(0,0,0,0) 0%,rgba(0,0,0,0.2) 30%,rgba(0,0,0,0.2) 50%,rgba(0,0,0,0.2) 70%,rgba(0,0,0,0) 100%);
-    background: -ms-linear-gradient(left, rgba(0,0,0,0) 0%,rgba(0,0,0,0.2) 30%,rgba(0,0,0,0.2) 50%,rgba(0,0,0,0.2) 70%,rgba(0,0,0,0) 100%);
-    background: linear-gradient(to right, rgba(0,0,0,0) 0%,rgba(0,0,0,0.2) 30%,rgba(0,0,0,0.2) 50%,rgba(0,0,0,0.2) 70%,rgba(0,0,0,0) 100%);
+.separator > .dark
+{
+    background: -moz-linear-gradient(left, rgba(0, 0, 0, 0) 0%, rgba(0, 0, 0, 0.2) 30%, rgba(0, 0, 0, 0.2) 50%, rgba(0, 0, 0, 0.2) 70%, rgba(0, 0, 0, 0) 100%);
+    background: -webkit-gradient(linear, left top, right top, color-stop(0%, rgba(0, 0, 0, 0)), color-stop(30%, rgba(0, 0, 0, 0.2)), color-stop(50%, rgba(0, 0, 0, 0.2)), color-stop(70%, rgba(0, 0, 0, 0.2)), color-stop(100%, rgba(0, 0, 0, 0)));
+    background: -webkit-linear-gradient(left, rgba(0, 0, 0, 0) 0%, rgba(0, 0, 0, 0.2) 30%, rgba(0, 0, 0, 0.2) 50%, rgba(0, 0, 0, 0.2) 70%, rgba(0, 0, 0, 0) 100%);
+    background: -o-linear-gradient(left, rgba(0, 0, 0, 0) 0%, rgba(0, 0, 0, 0.2) 30%, rgba(0, 0, 0, 0.2) 50%, rgba(0, 0, 0, 0.2) 70%, rgba(0, 0, 0, 0) 100%);
+    background: -ms-linear-gradient(left, rgba(0, 0, 0, 0) 0%, rgba(0, 0, 0, 0.2) 30%, rgba(0, 0, 0, 0.2) 50%, rgba(0, 0, 0, 0.2) 70%, rgba(0, 0, 0, 0) 100%);
+    background: linear-gradient(to right, rgba(0, 0, 0, 0) 0%, rgba(0, 0, 0, 0.2) 30%, rgba(0, 0, 0, 0.2) 50%, rgba(0, 0, 0, 0.2) 70%, rgba(0, 0, 0, 0) 100%);
     height: 1px;
     border: none;
     width: 100%;
     opacity: 0.3;
 }
 
-.separator > .light {
-    background: -moz-linear-gradient(left, rgba(255,255,255,0) 0%, rgba(255,255,255,1) 50%, rgba(255,255,255,0) 100%);
-    background: -webkit-gradient(linear, left top, right top, color-stop(0%,rgba(255,255,255,0)), color-stop(50%,rgba(255,255,255,1)), color-stop(100%,rgba(255,255,255,0)));
-    background: -webkit-linear-gradient(left, rgba(255,255,255,0) 0%,rgba(255,255,255,1) 50%,rgba(255,255,255,0) 100%);
-    background: -o-linear-gradient(left, rgba(255,255,255,0) 0%,rgba(255,255,255,1) 50%,rgba(255,255,255,0) 100%);
-    background: -ms-linear-gradient(left, rgba(255,255,255,0) 0%,rgba(255,255,255,1) 50%,rgba(255,255,255,0) 100%);
-    background: linear-gradient(to right, rgba(255,255,255,0) 0%,rgba(255,255,255,1) 50%,rgba(255,255,255,0) 100%);
+.separator > .light
+{
+    background: -moz-linear-gradient(left, rgba(255, 255, 255, 0) 0%, rgba(255, 255, 255, 1) 50%, rgba(255, 255, 255, 0) 100%);
+    background: -webkit-gradient(linear, left top, right top, color-stop(0%, rgba(255, 255, 255, 0)), color-stop(50%, rgba(255, 255, 255, 1)), color-stop(100%, rgba(255, 255, 255, 0)));
+    background: -webkit-linear-gradient(left, rgba(255, 255, 255, 0) 0%, rgba(255, 255, 255, 1) 50%, rgba(255, 255, 255, 0) 100%);
+    background: -o-linear-gradient(left, rgba(255, 255, 255, 0) 0%, rgba(255, 255, 255, 1) 50%, rgba(255, 255, 255, 0) 100%);
+    background: -ms-linear-gradient(left, rgba(255, 255, 255, 0) 0%, rgba(255, 255, 255, 1) 50%, rgba(255, 255, 255, 0) 100%);
+    background: linear-gradient(to right, rgba(255, 255, 255, 0) 0%, rgba(255, 255, 255, 1) 50%, rgba(255, 255, 255, 0) 100%);
     height: 1px;
     border: none;
     width: 100%;
@@ -375,44 +494,52 @@ ul .km-group-container > .km-group-title {
 }
 
 /* RETINA DISPLAY STYLES*/
-@media only screen and (-webkit-min-device-pixel-ratio: 2),(min-resolution: 192dpi) {
-    .img {
+@media only screen and (-webkit-min-device-pixel-ratio: 2) , (min-resolution: 192dpi)
+{
+    .img
+    {
         background-image: url(../styles/images/icenium2x.png);
         background-repeat: no-repeat;
         background-size: 100%;
     }
 
-    .logo {
+    .logo
+    {
         background-image: url(../styles/images/logo2x.png);
         background-repeat: no-repeat;
         background-size: 100%;
     }
 
-    #map-search {
+    #map-search
+    {
         background-image: url(../styles/images/search2x.png);
         background-repeat: no-repeat;
         background-size: 100%;
     }
 
-    #map-search:active {
+    #map-search:active
+    {
         background-image: url(../styles/images/search_active2x.png);
         background-repeat: no-repeat;
         background-size: 100%;
     }
 
-    #map-navigate-home {
+    #map-navigate-home
+    {
         background-image: url(../styles/images/location2x.png);
         background-repeat: no-repeat;
         background-size: 100%;
     }
 
-    #map-navigate-home:active {
+    #map-navigate-home:active
+    {
         background-image: url(../styles/images/location_active2x.png);
         background-repeat: no-repeat;
         background-size: 100%;
     }
 
-    .weather-icon {
+    .weather-icon
+    {
         background-image: url(../styles/images/sprite-weather2x.png);
         background-repeat: no-repeat;
         background-size: 100%;

@@ -29,7 +29,7 @@
             }
             else {
                 var eventId = e.view.params.eventId;
-                if (eventId != "") {
+                if (eventId != "" && eventId != undefined) {
                     that.set("isEventMessages", true);
                     that.set("userEventId", eventId);
                     that.onGetEventMessages(eventId);
@@ -73,7 +73,7 @@
             var dateNow = new Date();
             var date = dateNow.toLocaleDateString() + " " + dateNow.toLocaleTimeString();
             var messageInfo = {};
-            var url = ""
+            var url = "";
             if (that.isEventMessages) {
                 messageInfo = {
                     Content: that.messageToSend,
@@ -121,6 +121,40 @@
                     }
                 });
             }
+        },
+        
+        onSendFriendMessage: function() {
+            var that = global.app.messagesService.viewModel;
+            
+            if (that.messageToSend === "") {
+                navigator.notification.alert("Can't send empty message!",
+                                             function () {
+                                             }, "Login failed", 'OK');
+
+                return;
+            }
+            
+            var dateNow = new Date();
+            var date = dateNow.toLocaleDateString() + " " + dateNow.toLocaleTimeString();
+            var messageInfo = {};
+            var url = "free";
+            
+            messageInfo = {
+                    Content: that.messageToSend,
+                    Date: date
+                };
+            
+            var msgJSON = JSON.stringify(messageInfo);
+            
+            httpRequest.postJSON(global.app.serviceUrl + global.app.messages + url +
+                                 "?sessionKey=" + global.app.sessionKey, msgJSON)
+            .then(function (data) {
+                that.set("messageToSend", "");
+                navigator.notification.alert(data,
+                                             function () {
+                                             }, "Messages sent", 'OK');
+                global.app.application.navigate("#:back");
+            });
         }
     });
 

@@ -95,7 +95,6 @@
 
                     <div class="buttonArea">
                         <input type="submit" id="login" data-role="button" data-bind="click: onLogin, invisible: isLoggedIn" class="login-button" value="Login" />
-                        <br />
                         <input type="submit" id="register" data-role="button" data-bind="click: onRegister, invisible: isLoggedIn" class="register-button" value="Register" />
                     </div>
 
@@ -137,45 +136,38 @@
                     <span data-role="view-title"></span>
                 </div>
             </header>
-
-            <!--Footer-->
-            <footer data-role="footer">
-                <div data-role="tabstrip">
-                    <!--<a href="#tabstrip-home" data-icon="home">Home</a>-->
-
-                    <a href="views/search-users-view.html#users-view" data-icon="contacts">Friends</a>
-                    <a href="views/profile-view.html#profile-view" data-icon="contacts">Profile</a>
-                    <a href="views/update-profile-view.html#profile-update" data-icon="contacts">Update</a>
-                    <a href="views/events-view.html#tabstrip-weather" data-icon="toprated">Events</a>
-                </div>
-            </footer>
         </div>
 
         <div data-role="drawer" id="menu-drawer" style="width: 270px">
             <!--data-views="['/', 'drawer-home', 'drawer-starred', 'drawer-deleted', 'drawer-spam', 'drawer-drafts', 'drawer-sent', '/mobile/m/drawer/index.html']"-->
             <ul data-role="listview" data-type="group">
-                <li>
-                    Main menu
+                <li id="first-drawer-item">Main menu
                     <ul>
                         <li data-icon="home">
                             <a href="#tabstrip-login">Home</a>
                         </li>
                         <li data-icon="contacts">
-                            <a href="views/profile-view.html#profile-view" >Profile</a>
-                        </li>
-                        <li data-icon="search">
-                            <a href="views/search-users-view.html#users-view">Search</a>
+                            <a href="views/profile-view.html#profile-view" >Your Profile</a>
                         </li>
                         <li data-icon="contacts">
                             <a href="views/update-profile-view.html#profile-update">Update profile</a>
                         </li>
+                    </ul>
+                </li>
+                <li>Friends
+                    <ul>
+                        <li data-icon="search">
+                            <a href="views/search-users-view.html#users-view">Search users</a>
+                        </li>
                         <li data-icon="contacts">
                             <a href="views/lists-view.html#lists-view?type=1">Your friends</a>
                         </li>
+                        <li data-icon="contacts">
+                            <a href="views/free-friends-view.html#free-friends">Write to your friends</a>
+                        </li>
                     </ul>
                 </li>
-                <li>
-                    Events
+                <li>Events
                     <ul>
                         <li data-icon="toprated">
                             <a href="views/lists-view.html#lists-view?type=0">My events</a>

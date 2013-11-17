@@ -7,7 +7,10 @@
     <div class="view-content">
         <div class="user-info"  data-bind="visible: isLoggedIn">
             <div id="user-details" data-role="tabstrip">
-                <img id="avatar" style="width: 50%" data-bind="attr: { src: avatar }" alt="Profile picture" />
+                <img id="avatar" data-bind=" attr: { src: avatar }" alt="Profile picture" />
+                <div>
+                    <h2 data-bind="text: displayName"></h2>
+                </div>
             </div>
             <div class="buttonArea" data-bind="visible: isOtherUser">
                 <input type="submit" class="addfriend" 
@@ -21,15 +24,7 @@
                        class="message-button" value="Messages" />
             </div>
             <div>
-                <ul data-role="listview" data-style="inset" data-type="group">
-                    <li>
-                        Display name
-                        <ul>
-                            <li>
-                                <span data-bind="text: displayName"></span>
-                            </li>
-                        </ul>
-                    </li>
+                <ul class="user-details" data-role="listview" data-style="inset" data-type="group">
                     <li>
                         Friends
                         <ul>
@@ -38,7 +33,7 @@
                             </li>
                         </ul>
                     </li>
-                    <li>
+                    <li data-bind="visible: areEventsFound">
                         Events
                         <ul>
                             <li>

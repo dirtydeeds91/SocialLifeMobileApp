@@ -6,6 +6,7 @@
         isLoggedIn: false,
         isOtherUser: true,
         isOtherUserFriend: false,
+        areEventsFound: false,
         userId: "",
         displayName: "",
         about: "",
@@ -55,27 +56,119 @@
                 .then(function (user) {
                     that.set("userId", user.UserId);
                     that.set("displayName", user.DisplayName);
-                    that.set("about", user.About);
+                    
+                    //if about is missing, set some text
+                    if (user.About != "" && user.About != null) {
+                        that.set("about", user.About);
+                    }
+                    else {
+                        that.set("about", "Not set");
+                    }
+                    
                     that.set("avatar", user.Avatar);
-                    var dateString = new Date(user.BirthDate).toDateString();
-                    that.set("birthdate", dateString);
-                    that.set("city", user.City);
-                    that.set("country", user.Country);
+                    
+                    //if date info is missing, set some text
+                    var dateString = new Date(user.BirthDate && user.Mood != null).toDateString();
+                    if (dateString != "" && dateString != null) {
+                        that.set("birthdate", dateString);
+                    }
+                    else {
+                        that.set("birthdate", "Not set");
+                    }
+                    
+                    //if city info is missing, set some text
+                    if (user.City != "" && user.City != null) {
+                        that.set("city", user.City);
+                    }
+                    else {
+                        that.set("city", "Not set");
+                    }
+                    
+                    //if country info is missing, set some text
+                    if (user.Country != "" && user.Country != null) {
+                        that.set("country", user.Country);
+                    }
+                    else {
+                        that.set("country", "Not set");
+                    }
+                    
                     if (user.Gender == true) {
                         that.set("gender", "Male");
                     }
                     else {
                         that.set("gender", "Female");
                     }
-                    that.set("mood", user.Mood);
+                    
+                    //if mood info is missing, set some text
+                    if (user.Mood != "" && user.Mood != null) {
+                        that.set("mood", user.Mood);
+                    }
+                    else {
+                        that.set("mood", "Not set");
+                    }
+                    
                     that.set("status", user.Status);
-                    that.set("phone", user.PhoneNumber);
+                    
+                    //if phone info is missing, set some text
+                    if (user.PhoneNumber != "" && user.Mood != null) {
+                        that.set("phone", user.PhoneNumber);
+                    }
+                    else {
+                        that.set("phone", "Not set");
+                    }
                     that.set("friends", user.FriendsList);
+                    
+                    if (user.EventsCount > 0) {
+                        that.set("areEventsFound", true);
+                    }
+                    else {
+                        that.set("areEventsFound", false);
+                    }
                 });
             }
         },
         
         takePicture: function () {
+            var that = global.app.profileService.viewModel;
+            //global.app.application.
+            navigator.camera.getPicture(that.changeAvatar, that.takePictureFail, {
+                quality: 50,
+                targetWidth: 100,
+                targetHeight: 100,
+                destinationType : Camera.DestinationType.DATA_URL,
+                sourceType: Camera.PictureSourceType.CAMERA
+            }); 
+        },
+        
+        choosePicture: function () {
+            var that = global.app.profileService.viewModel;
+            navigator.camera.getPicture(that.changeAvatar, that.takePictureFail, {
+                quality: 50,
+                targetWidth: 100,
+                targetHeight: 100,
+                destinationType : Camera.DestinationType.DATA_URL,
+                sourceType: Camera.PictureSourceType.PHOTOLIBRARY,
+                MediaType: Camera.MediaType.PICTURE
+            }); 
+        },
+        
+        changeAvatar: function changeAvatar(image) {
+            var imageData = {"image": image, "type": "base64" };
+            
+            var imageJSON = JSON.stringify(imageData);
+            
+            var imgurService = "https://api.imgur.com/3/image";
+            
+            httpRequest.postImage(imgurService, imageJSON)
+            .then(function (data) {
+                var that = global.app.profileService.viewModel;
+                
+                that.set("avatar", data.data.link);
+            });
+        },
+        
+        takePictureFail: function takePictureFail(message) {
+            alert('Failed because: ' + message);
         },
         
         onUpdate: function () {
@@ -125,7 +218,7 @@
             
             httpRequest.putJSON(global.app.serviceUrl + global.app.profiles + "update?sessionKey=" + global.app.sessionKey, jsonData)
             .then(function (data) {
-                global.application.navigate("#:back");
+                global.app.application.navigate("#:back");
             });
         },
         
@@ -138,7 +231,7 @@
                 that.set("isOtherUserFriend", true);
                 
                 var friendsString = global.app.userFriends;
-                if(friendsString == "") {
+                if (friendsString == "") {
                     friendsString = that.userId.toString();
                 }
                 else {
