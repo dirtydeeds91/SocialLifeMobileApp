@@ -136,7 +136,9 @@
                 targetWidth: 100,
                 targetHeight: 100,
                 destinationType : Camera.DestinationType.DATA_URL,
-                sourceType: Camera.PictureSourceType.CAMERA
+                sourceType: Camera.PictureSourceType.CAMERA,
+                targetWidth : 200,
+                targetHeight : 200
             }); 
         },
         
