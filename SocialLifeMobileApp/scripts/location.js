@@ -1,8 +1,8 @@
 (function (global) {
     var map,
-        geocoder,
-        LocationViewModel,
-        app = global.app = global.app || {};
+    geocoder,
+    LocationViewModel,
+    app = global.app = global.app || {};
 
     LocationViewModel = kendo.data.ObservableObject.extend({
         _lastMarker: null,
@@ -10,10 +10,19 @@
 
         address: "",
         isGoogleMapsInitialized: false,
+        isEventMap: false,
+        
+        dropMarker: function(e) {
+            var marker = new google.maps.Marker({
+                position:5,
+            });
+
+            marker.setMap(map);
+        },
 
         onNavigateHome: function () {
             var that = this,
-                position;
+            position;
 
             that._isLoading = true;
             that.showLoading();
@@ -36,13 +45,14 @@
                     that.hideLoading();
 
                     navigator.notification.alert("Unable to determine current location. Cannot connect to GPS satellite.",
-                        function () { }, "Location failed", 'OK');
+                                                 function () {
+                                                 }, "Location failed", 'OK');
                 },
                 {
-                    timeout: 30000,
-                    enableHighAccuracy: true
-                }
-            );
+                timeout: 30000,
+                enableHighAccuracy: true
+            }
+                );
         },
 
         onSearchAddress: function () {
@@ -50,12 +60,13 @@
 
             geocoder.geocode(
                 {
-                    'address': that.get("address")
-                },
+                'address': that.get("address")
+            },
                 function (results, status) {
                     if (status !== google.maps.GeocoderStatus.OK) {
                         navigator.notification.alert("Unable to find address.",
-                            function () { }, "Search failed", 'OK');
+                                                     function () {
+                                                     }, "Search failed", 'OK');
 
                         return;
                     }
@@ -93,7 +104,7 @@
         initLocation: function () {
             var mapOptions;
 
-            if (typeof google === "undefined"){
+            if (typeof google === "undefined") {
                 return;
             } 
 

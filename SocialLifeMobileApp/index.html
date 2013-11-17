@@ -102,30 +102,6 @@
             </div>
 
         </div>
-        <!--Location-->
-        <!--<div id="tabstrip-location"
-        data-role="view"
-        data-title="Location"
-        data-init="app.locationService.initLocation"
-        data-show="app.locationService.show"
-        data-hide="app.locationService.hide"
-        data-model="app.locationService.viewModel"
-        data-stretch="true">
-        <div id="no-map" data-bind="invisible: isGoogleMapsInitialized">
-        <div id="no-map" data-bind="invisible: isGoogleMapsInitialized">
-        Location requires internet connection to display the map.
-        </div>
-        <div id="map-search-wrap" data-bind="visible: isGoogleMapsInitialized">
-        <button id="map-navigate-home" data-bind="click: onNavigateHome"></button>
-        <form onsubmit="return false;">
-        <input id="map-address" type="search" data-bind="value: address" placeholder="Address" />
-        <input id="map-search" type="submit" value="" data-bind="click: onSearchAddress" />
-        </form>
-        </div>
-        <div id="map-canvas" data-bind="visible: isGoogleMapsInitialized"></div>
-        </div>
-        </div>-->
-
         <!--Layout-->
         <div data-role="layout" data-id="tabstrip-layout">
 
@@ -151,6 +127,9 @@
                         </li>
                         <li data-icon="contacts">
                             <a href="views/update-profile-view.html#profile-update">Update profile</a>
+                        </li>
+                        <li data-icon="contacts">
+                            <a href="views/map-view.html#location-view">Location</a>
                         </li>
                     </ul>
                 </li>

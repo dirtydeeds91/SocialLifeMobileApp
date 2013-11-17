@@ -102,6 +102,10 @@
             that.clearForm();
             global.app.isLoggedIn = false;
             that.set("isLoggedIn", false);
+            global.app.sessionKey = "";
+            global.app.userId = "";
+            global.app.displayName = "";
+            global.app.userFriends = "";
         },
         
         onLoginSuccess: function(type) {
