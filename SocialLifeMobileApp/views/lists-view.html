@@ -15,9 +15,10 @@
                 data-bind="source: events, visible: areEventsFound"
                 data-template="event-list-template">
             </ul>
+            <h1 data-bind="invisible: areAnyResults">No events or users found.</h1>
         </div>
         <div class="logged-out" data-bind="invisible: isLoggedIn">
-            <h1 class="error" data-bind="invisible: isLoggedIn">You are not logged in. Please log in to view messages.</h1>
+            <h1 class="error" data-bind="invisible: isLoggedIn">You are not logged in. Please log in to view users & events.</h1>
         </div>
     </div>
 

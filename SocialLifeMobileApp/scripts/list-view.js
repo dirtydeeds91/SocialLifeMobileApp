@@ -8,6 +8,7 @@
         events: [],
         areEventsFound: false,
         isLoggedIn: false,
+        areAnyResults: false,
 
         init: function () {
             var that = this;
@@ -22,7 +23,7 @@
             
             that.set("isLoggedIn", global.app.isLoggedIn);
             
-            if(!that.isLoggedIn) {
+            if (!that.isLoggedIn) {
                 return;
             }
             var type = e.view.params.type;
@@ -31,15 +32,27 @@
                     that.set("areUsersFound", true);
                     that.set("areEventsFound", false);
                     that.set("friends", users.friends);
+                    that.set("areAnyResults", true);
                 }
                 else {
-                    that.set("areUsersFound", false);
-                    that.set("friends", []);
+                    users = global.app.loginService.viewModel;
+                    
+                    if (users.profile.friends.length != 0) {
+                        that.set("areUsersFound", true);
+                        that.set("areEventsFound", false);
+                        that.set("friends", users.profile.friends);
+                        that.set("areAnyResults", true);
+                    }
+                    else {
+                        that.set("areUsersFound", false);
+                        that.set("friends", []);
+                        that.set("areAnyResults", false);
+                    }
                 }
             }
             else if (type == 0) {
                 var userEventsId = users.userId;
-                if(userEventsId == "" || userEventsId == undefined) {
+                if (userEventsId == "" || userEventsId == undefined) {
                     userEventsId = global.app.userId;
                 }
 
@@ -49,10 +62,12 @@
                     that.set("areUsersFound", false);
                     if (events.length != 0) {
                         that.set("areEventsFound", true);
+                        that.set("areAnyResults", true);
                         that.set("events", events);
                     }
                     else {
                         that.set("areEventsFound", false);
+                        that.set("areAnyResults", false);
                     }
                 });
             }
