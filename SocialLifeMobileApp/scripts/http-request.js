@@ -113,11 +113,32 @@ window.httpRequest = (function() {
         return promise;
     }
     
+    function deleteNoJSON(url) {
+        var promise = new RSVP.Promise(function(resolve, reject) {
+            $.ajax({
+                url:url,
+                type:"DELETE",
+                timeout:5000,
+                success:function(data) {
+                    resolve(data);
+                },
+                error:function(request, status, error) {
+                    var errorMsg = JSON.parse(request.responseText);
+                    navigator.notification.alert(errorMsg.Message + " " + errorMsg.ExceptionMessage,
+                                                 function() {
+                                                 }, "Put request failed.", 'OK');
+                }
+            });
+        });
+        return promise;
+    }
+    
     return {
         getJSON:getJSON,
         postJSON:postJSON,
         putJSON:putJSON,
         putNoJSON: putNoJSON,
         postImage: postImage,
+        deleteNoJSON: deleteNoJSON
     };    
 }());

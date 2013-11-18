@@ -9,10 +9,10 @@
             <div class="avatar" data-role="tabstrip">
                 <img id="avatar" data-bind="click: takePicture, attr: { src: avatar }" alt="Profile picture" />
                 <div>
-                    <input type="submit" class="camera" 
+                    <input type="submit" class="camera-button" 
                            data-role="button" data-bind="click: takePicture" 
                            value="Camera" />
-                    <input type="submit" class="camera" 
+                    <input type="submit" class="camera-button" 
                            data-role="button" data-bind="click: choosePicture" 
                            value="Gallery" />
                 </div>
@@ -57,8 +57,8 @@
                 </ul>
 
                 <div class="buttonArea">
-                    <input type="submit" class="update" data-role="button" data-bind="click: onSubmitEventData, invisible: isEventFound" class="update-button" value="Create event" />
-                    <input type="submit" class="update" data-role="button" data-bind="click: onSubmitEventData, visible: isEventFound" class="update-button" value="Update event" />
+                    <input type="submit" data-role="button" data-bind="click: onSubmitEventData, invisible: isEventFound" class="update-button" value="Create event" />
+                    <input type="submit" data-role="button" data-bind="click: onSubmitEventData, visible: isEventFound" class="update-button" value="Update event" />
                 </div>
             </form>
         </div>

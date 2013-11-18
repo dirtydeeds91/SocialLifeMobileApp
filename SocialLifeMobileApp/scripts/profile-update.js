@@ -68,7 +68,7 @@
                     that.set("avatar", user.Avatar);
                     
                     //if date info is missing, set some text
-                    var dateString = new Date(user.BirthDate && user.Mood != null).toDateString();
+                    var dateString = user.BirthDate.toString();
                     if (dateString != "" && dateString != null) {
                         that.set("birthdate", dateString);
                     }
@@ -179,7 +179,7 @@
             displayName = that.get("displayName"),
             about = that.get("about"),
             avatar = that.get("avatar"),
-            birthdate = that.get("birthdate"),
+            birthdate = $("#update-birth").val().toString(),
             city = that.get("city"),
             country = that.get("country"),
             gender = $('input[name=gender-radio]:checked', '#update-form').val(),

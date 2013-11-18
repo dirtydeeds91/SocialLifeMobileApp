@@ -13,14 +13,11 @@
                 </div>
             </div>
             <div class="buttonArea" data-bind="visible: isOtherUser">
-                <input type="submit" class="addfriend" 
-                       data-role="button" data-bind="click: onAddAsFriend, invisible: isOtherUserFriend" 
+                <input type="submit" data-role="button" data-bind="click: onAddAsFriend, invisible: isOtherUserFriend" 
                        class="add-button" value="Add friend" />
-                <input type="submit" class="removefriend" 
-                       data-role="button" data-bind="click: onRemoveFriend, visible: isOtherUserFriend" 
+                <input type="submit" data-role="button" data-bind="click: onRemoveFriend, visible: isOtherUserFriend" 
                        class="remove-button" value="Remove friend" />
-                <input type="submit" class="message" 
-                       data-role="button" data-bind="click: onOpenMessages, visible: isOtherUserFriend" 
+                <input type="submit" data-role="button" data-bind="click: onOpenMessages, visible: isOtherUserFriend" 
                        class="message-button" value="Messages" />
             </div>
             <div>

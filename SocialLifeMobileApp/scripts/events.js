@@ -55,8 +55,8 @@
                     that.set("avatar", event.AvatarUrl);
                     that.set("creator", event.CreatorName);
                     that.set("users", event.UsersList);
-                    var dateString = new Date(event.Date).toDateString();
-                    that.set("date", dateString);
+                    //var dateString = new Date(event.Date).toDateString();
+                    that.set("date", event.Date);
                     that.set("status", event.Status);
                     
                     var usersLen = that.users.length;
@@ -89,13 +89,27 @@
         onNotAttendButton: function () {
             var that = global.app.eventService.viewModel;
             
-            httpRequest.putJSON(global.app.serviceUrl + global.app.events + "remove/" + 
-                                that.eventId + "?sessionKey=" + global.app.sessionKey + "&userId=" + global.app.userId)
-            .then(function (data) {
-                that.set("isAttending", false);
+            if (that.creator == global.app.displayName) {
+                navigator.notification.confirm(
+                    'You are the creator. Do you want to delete this event?', // message
+                    function(chosenAction) {
+                        if (chosenAction == 1) {
+                            that.onDeleteEvent();
+                        }  
+                    },
+                    'Delete event',
+                    ['Yes','No']
+                    );
+            }
+            else {
+                httpRequest.putJSON(global.app.serviceUrl + global.app.events + "remove/" + 
+                                    that.eventId + "?sessionKey=" + global.app.sessionKey + "&userId=" + global.app.userId)
+                .then(function (data) {
+                    that.set("isAttending", false);
                 
-                that.onGetEventInfo(that.eventId);
-            });
+                    that.onGetEventInfo(that.eventId);
+                });
+            }
         },
         
         onSeeMessages: function () {
@@ -126,10 +140,14 @@
             var that = global.app.eventService.viewModel;
             
             var status = $('input[name=status-radio]:checked', '#event-form').val();
+            var dateString = $('#update-date').val().toString(); //new Date(); //
+            
             //LOCATION!!!!
-            var contentInfo = {"Content": that.content, "AvatarUrl": that.avatar, 
-                               "Name": that.eventName, "Status": status, "Date": that.date, 
-                               "Longitude": "asd", "Latitude": "asd" };
+            var contentInfo = {
+                "Content": that.content, "AvatarUrl": that.avatar, 
+                "Name": that.eventName, "Status": status, "Date": dateString, 
+                "Longitude": "23.331614", "Latitude": "42.694359"
+            };
             
             var contentJSON = JSON.stringify(contentInfo);
             
@@ -159,6 +177,16 @@
             httpRequest.postJSON(serviceUrl, contentJSON)
             .then(function (event) {
                 global.app.application.navigate("views/event-view.html#event-view?eventId=" + event.EventId, 'slide:left');
+            });
+        },
+        
+        onDeleteEvent: function() {
+            var that = global.app.eventService.viewModel;
+            
+            httpRequest.deleteNoJSON(global.app.serviceUrl + global.app.events + "delete/" + 
+                                     that.eventId + "?sessionKey=" + global.app.sessionKey)
+            .then(function(a) {
+                global.app.application.navigate("views/profile-view.html#profile-view", 'slide:left');
             });
         },
         

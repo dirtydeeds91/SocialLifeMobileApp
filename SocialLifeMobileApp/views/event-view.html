@@ -14,11 +14,9 @@
                 </div>
             </div>
             <div class="buttonArea">
-                <input type="submit" class="addfriend" 
-                       data-role="button" data-bind="click: onAttendButton, invisible: isAttending" 
+                <input type="submit" data-role="button" data-bind="click: onAttendButton, invisible: isAttending" 
                        class="add-button" value="Attend" />
-                <input type="submit" class="removefriend" 
-                       data-role="button" data-bind="click: onNotAttendButton, visible: isAttending" 
+                <input type="submit" data-role="button" data-bind="click: onNotAttendButton, visible: isAttending" 
                        class="remove-button" value="Not attending" />
             </div>
             <div>
@@ -91,18 +89,6 @@
                data-bind="events:{ click: onUpdateEvent }">Update</a>
         </div>
     </header>
-
-    <!--Footer-->
-    <footer data-role="footer">
-        <div data-role="tabstrip">
-            <!--<a href="#tabstrip-home" data-icon="home">Home</a>-->
-
-            <a href="views/search-users-view.html#users-view" data-icon="contacts">Friends</a>
-            <a href="views/profile-view.html#profile-view" data-icon="contacts">Profile</a>
-            <a href="views/update-profile-view.html#profile-update" data-icon="contacts">Update</a>
-            <a href="views/events-view.html#tabstrip-weather" data-icon="toprated">Events</a>
-        </div>
-    </footer>
 </div>
 
 <script>

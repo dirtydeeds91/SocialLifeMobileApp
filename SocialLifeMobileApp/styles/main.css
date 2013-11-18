@@ -103,17 +103,24 @@ body, html
     text-align: center;
 }
 
-.buttonArea > input {
+.buttonArea > input, .buttonArea input {
     display: block;
     margin: 5px auto;
 }
 
-.login-button, .register-button, .update-button, .camera-button
+.login-button, .register-button, .update-button, .add-button, .remove-button, .message-button
 {
     width: 50%;
     max-width: 300px;
     font-size: .9em;
     -webkit-appearance: none;
+}
+
+.camera-button, .camera {
+    width: 25%;
+    max-width: 150px;
+    font-size: .9em;
+    background: #fcfcfc;
 }
 
 .user-info .avatar > div .camera {
