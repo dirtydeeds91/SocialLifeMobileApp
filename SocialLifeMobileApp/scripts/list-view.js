@@ -59,11 +59,17 @@
                 httpRequest.getJSON(global.app.serviceUrl + global.app.events + "user/" + userEventsId + 
                                     "?sessionKey=" + global.app.sessionKey)
                 .then(function (events) {
-                    that.set("areUsersFound", false);
-                    if (events.length != 0) {
-                        that.set("areEventsFound", true);
-                        that.set("areAnyResults", true);
-                        that.set("events", events);
+                    if (events != "No results found") {
+                        that.set("areUsersFound", false);
+                        if (events.length != 0) {
+                            that.set("areEventsFound", true);
+                            that.set("areAnyResults", true);
+                            that.set("events", events);
+                        }
+                        else {
+                            that.set("areEventsFound", false);
+                            that.set("areAnyResults", false);
+                        }
                     }
                     else {
                         that.set("areEventsFound", false);

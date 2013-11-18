@@ -17,7 +17,7 @@
     app.userId = "";
     app.displayName = "";
     app.userFriends = "";
-    app.serviceUrl = "http://sociallife.apphb.com/api/";
+    app.serviceUrl = "http://localhost:22757/api/";
     app.users = "users/";
     app.profiles = "profiles/";
     app.messages = "messages/";

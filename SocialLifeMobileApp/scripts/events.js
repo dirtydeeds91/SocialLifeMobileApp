@@ -8,6 +8,7 @@
         isEventFound: false,
         eventId: 0,
         eventName: "",
+        avatar: "",
         content: "",
         users: [],
         creator: "",
@@ -51,6 +52,7 @@
                     that.set("eventId", eventId);
                     that.set("eventName", event.Name);
                     that.set("content", event.Content);
+                    that.set("avatar", event.AvatarUrl);
                     that.set("creator", event.CreatorName);
                     that.set("users", event.UsersList);
                     var dateString = new Date(event.Date).toDateString();
@@ -125,7 +127,9 @@
             
             var status = $('input[name=status-radio]:checked', '#event-form').val();
             //LOCATION!!!!
-            var contentInfo = {"Content": that.content, "Name": that.eventName, "Status": status, "Date": that.date, Longitude: "asd", Latitude: "asd" };
+            var contentInfo = {"Content": that.content, "AvatarUrl": that.avatar, 
+                               "Name": that.eventName, "Status": status, "Date": that.date, 
+                               "Longitude": "asd", "Latitude": "asd" };
             
             var contentJSON = JSON.stringify(contentInfo);
             
@@ -156,6 +160,51 @@
             .then(function (event) {
                 global.app.application.navigate("views/event-view.html#event-view?eventId=" + event.EventId, 'slide:left');
             });
+        },
+        
+        takePicture: function () {
+            var that = global.app.eventService.viewModel;
+            //global.app.application.
+            navigator.camera.getPicture(that.changeAvatar, that.takePictureFail, {
+                quality: 50,
+                targetWidth: 100,
+                targetHeight: 100,
+                destinationType : Camera.DestinationType.DATA_URL,
+                sourceType: Camera.PictureSourceType.CAMERA,
+                targetWidth : 200,
+                targetHeight : 200
+            }); 
+        },
+        
+        choosePicture: function () {
+            var that = global.app.eventService.viewModel;
+            navigator.camera.getPicture(that.changeAvatar, that.takePictureFail, {
+                quality: 50,
+                targetWidth: 100,
+                targetHeight: 100,
+                destinationType : Camera.DestinationType.DATA_URL,
+                sourceType: Camera.PictureSourceType.PHOTOLIBRARY,
+                MediaType: Camera.MediaType.PICTURE
+            }); 
+        },
+        
+        changeAvatar: function changeAvatar(image) {
+            var imageData = {"image": image, "type": "base64" };
+            
+            var imageJSON = JSON.stringify(imageData);
+            
+            var imgurService = "https://api.imgur.com/3/image";
+            
+            httpRequest.postImage(imgurService, imageJSON)
+            .then(function (data) {
+                var that = global.app.eventService.viewModel;
+                
+                that.set("avatar", data.data.link);
+            });
+        },
+        
+        takePictureFail: function takePictureFail(message) {
+            alert('Failed because: ' + message);
         },
         
         checkEnter: function (e) {

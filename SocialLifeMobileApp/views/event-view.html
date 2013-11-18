@@ -7,8 +7,11 @@
      data-show="app.eventService.viewModel.onLoad">
     <div class="view-content">
         <div class="event-info"  data-bind="visible: isLoggedIn">
-            <div id="event-details" data-role="tabstrip">
-                <img id="avatar" style="width: 50%" data-bind="attr: { src: avatar }" alt="Profile picture" />
+            <div id="user-details" data-role="tabstrip">
+                <img id="avatar" data-bind=" attr: { src: avatar }" alt="Profile picture" />
+                <div>
+                    <h2 data-bind="text: eventName"></h2>
+                </div>
             </div>
             <div class="buttonArea">
                 <input type="submit" class="addfriend" 

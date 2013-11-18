@@ -6,7 +6,17 @@
      data-show="app.eventService.viewModel.onLoad">
     <div class="view-content">
         <div class="event-info" data-bind="visible: isLoggedIn">
-            <div class="avatar" data-bind="click: takePicture"></div>
+            <div class="avatar" data-role="tabstrip">
+                <img id="avatar" data-bind="click: takePicture, attr: { src: avatar }" alt="Profile picture" />
+                <div>
+                    <input type="submit" class="camera" 
+                           data-role="button" data-bind="click: takePicture" 
+                           value="Camera" />
+                    <input type="submit" class="camera" 
+                           data-role="button" data-bind="click: choosePicture" 
+                           value="Gallery" />
+                </div>
+            </div>
             <form id="event-form" data-bind="events: { keyup: checkEnter }">
                 <ul data-role="listview" data-style="inset">
                     <li>
