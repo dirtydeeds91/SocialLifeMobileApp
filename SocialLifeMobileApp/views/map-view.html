@@ -5,6 +5,7 @@
      data-init="app.locationService.initLocation"
      data-show="app.locationService.show"
      data-hide="app.locationService.hide"
+     data-layout="map-layout"
      data-model="app.locationService.viewModel"
      data-stretch="true">
 
@@ -18,5 +19,22 @@
             <input id="map-search" type="submit" value="" data-bind="click: onSearchAddress" />
         </form>
     </div>
-    <div id="map-canvas" data-bind="visible: isGoogleMapsInitialized, click: dropMarker" data-hold="app.locationService.viewModel.dropMarker"></div>
+    <div id="map-canvas" data-bind="visible: isGoogleMapsInitialized" data-hold="app.locationService.viewModel.dropMarker"></div>
 </div>
+
+<div data-role="layout" data-id="map-layout">
+    <!--Header-->
+    <header data-role="header">
+        <div data-role="navbar">
+            <a data-role="button" data-rel="drawer" href="#menu-drawer" data-icon="organize" data-align="left"></a>
+            <span data-role="view-title"></span>
+            <a data-role="button" class="right-navbar" 
+               id="choose-location-btn" data-align="right" 
+               data-bind="events:{ click: onChooseLocation }">Choose</a>
+        </div>
+    </header>
+</div>
+
+<script>
+    kendo.bind($("#choose-location-btn"), app.locationService.viewModel);
+</script>

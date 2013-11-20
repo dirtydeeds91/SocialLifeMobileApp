@@ -10,14 +10,26 @@
 
         address: "",
         isGoogleMapsInitialized: false,
-        isEventMap: false,
         
-        dropMarker: function(e) {
-            var marker = new google.maps.Marker({
-                position:5,
-            });
+        onChooseLocation: function(e) {
+            var that = this;
+            var chosenPosition = that._lastMarker.position;
 
-            marker.setMap(map);
+            var eventLocation = global.app.eventService.viewModel;
+            if (eventLocation.latitude != "" && eventLocation.longitude != "") {
+                navigator.notification.alert("You have to create or update an event to choose a location!",
+                                             function () {
+                                             }, "Location chosing failed", 'OK');
+
+                return;
+            }
+            else {
+                eventLocation.set("latitude", chosenPosition.ob);
+                eventLocation.set("longitude", chosenPosition.pb);
+                eventLocation.set("isLocationChosen", true);
+            
+                global.app.application.navigate("#:back");
+            }
         },
 
         onNavigateHome: function () {
@@ -26,33 +38,56 @@
 
             that._isLoading = true;
             that.showLoading();
+            
+            var eventLocation = global.app.eventService.viewModel;
+            var userLocation = global.app.profileService.viewModel;
+            if (eventLocation.latitude != "" && eventLocation.longitude != "") {
+                that.isEventLocation = true;
+                position = new google.maps.LatLng(eventLocation.latitude, eventLocation.longitude);
+                map.panTo(position);
+                that._putMarker(position);
 
-            navigator.geolocation.getCurrentPosition(
-                function (position) {
-                    position = new google.maps.LatLng(position.coords.latitude, position.coords.longitude);
-                    map.panTo(position);
-                    that._putMarker(position);
-
-                    that._isLoading = false;
-                    that.hideLoading();
-                },
-                function (error) {
-                    //default map coordinates
-                    position = new google.maps.LatLng(43.459336, -80.462494);
-                    map.panTo(position);
-
-                    that._isLoading = false;
-                    that.hideLoading();
-
-                    navigator.notification.alert("Unable to determine current location. Cannot connect to GPS satellite.",
-                                                 function () {
-                                                 }, "Location failed", 'OK');
-                },
-                {
-                timeout: 30000,
-                enableHighAccuracy: true
+                that._isLoading = false;
+                that.hideLoading();
             }
-                );
+            else if (userLocation.latitude != "" && userLocation.longitude != "") {
+                that.isEventLocation = true;
+                position = new google.maps.LatLng(userLocation.latitude, userLocation.longitude);
+                map.panTo(position);
+                that._putMarker(position);
+
+                that._isLoading = false;
+                that.hideLoading();
+            }
+            else {
+                that.isEventLocation = false;
+                
+                navigator.geolocation.getCurrentPosition(
+                    function (position) {
+                        position = new google.maps.LatLng(position.coords.latitude, position.coords.longitude);
+                        map.panTo(position);
+                        that._putMarker(position);
+
+                        that._isLoading = false;
+                        that.hideLoading();
+                    },
+                    function (error) {
+                        //default map coordinates
+                        position = new google.maps.LatLng(43.459336, -80.462494);
+                        map.panTo(position);
+
+                        that._isLoading = false;
+                        that.hideLoading();
+
+                        navigator.notification.alert("Unable to determine current location. Cannot connect to GPS satellite.",
+                                                     function () {
+                                                     }, "Location failed", 'OK');
+                    },
+                    {
+                    timeout: 30000,
+                    enableHighAccuracy: true
+                });
+            }
         },
 
         onSearchAddress: function () {
@@ -138,6 +173,8 @@
 
             //resize the map in case the orientation has been changed while showing other tab
             google.maps.event.trigger(map, "resize");
+            
+            kendo.bind($("#choose-location-btn"), app.locationService.viewModel);
         },
 
         hide: function () {

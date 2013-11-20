@@ -38,6 +38,14 @@
                             </li>
                         </ul>
                     </li>
+                    <li data-bind="visible: isLocationFound">
+                        Events
+                        <ul>
+                            <li>
+                                <a data-bind="click: onSeeLocation">See last location on <span data-bind="text: locationDate"></span></a>
+                            </li>
+                        </ul>
+                    </li>
                     <li>
                         City
                         <ul>

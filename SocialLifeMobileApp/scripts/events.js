@@ -6,6 +6,7 @@
         isLoggedIn: false,
         isAttending: false,
         isEventFound: false,
+        isLocationChosen: false,
         eventId: 0,
         eventName: "",
         avatar: "",
@@ -14,6 +15,8 @@
         creator: "",
         date: "",
         status: "",
+        longitude: "",
+        latitude: "",
 
         init: function () {
             var that = this;
@@ -30,7 +33,7 @@
             if (eventId != "" && eventId != undefined) {
                 that.onGetEventInfo(eventId);
             }
-            else {
+            else if (!that.isLocationChosen) {
                 that.set("eventId", "");
                 that.set("isEventFound", false);
                 that.set("eventName", "");
@@ -39,6 +42,8 @@
                 that.set("users", "");
                 that.set("date", "");
                 that.set("status", "");
+                that.set("longitude", "");
+                that.set("latitude", "");
             }
         },
         
@@ -58,6 +63,8 @@
                     //var dateString = new Date(event.Date).toDateString();
                     that.set("date", event.Date);
                     that.set("status", event.Status);
+                    that.set("latitude", event.Latitude);
+                    that.set("longitude", event.Longitude);
                     
                     var usersLen = that.users.length;
                     
@@ -143,10 +150,17 @@
             var dateString = $('#update-date').val().toString(); //new Date(); //
             
             //LOCATION!!!!
+            var longitude = that.get("longitude");
+            var latitude = that.get("latitude");
+            
+            if (longitude == "" || latitude == "") {
+                latitude = "42.694359";
+                longitude = "23.331614";
+            }
             var contentInfo = {
                 "Content": that.content, "AvatarUrl": that.avatar, 
                 "Name": that.eventName, "Status": status, "Date": dateString, 
-                "Longitude": "23.331614", "Latitude": "42.694359"
+                "Longitude": longitude, "Latitude": latitude
             };
             
             var contentJSON = JSON.stringify(contentInfo);
@@ -169,13 +183,17 @@
             
             httpRequest.putJSON(serviceUrl, contentJSON)
             .then(function (event) {
+                that.set("isLocationChosen", false);
                 global.app.application.navigate("views/event-view.html#event-view?eventId=" + that.eventId, 'slide:left');
             });
         },
         
         onCreateEventQuery: function(serviceUrl, contentJSON) {
+            var that = global.app.eventService.viewModel;
+            
             httpRequest.postJSON(serviceUrl, contentJSON)
             .then(function (event) {
+                that.set("isLocationChosen", false);
                 global.app.application.navigate("views/event-view.html#event-view?eventId=" + event.EventId, 'slide:left');
             });
         },
@@ -242,6 +260,14 @@
                 $(e.target).blur();
                 that.onLogin();
             }
+        },
+        
+        onChooseLocation: function() {
+            global.app.application.navigate("views/map-view.html#location-view", 'slide:left');
+        },
+        
+        onSeeLocation: function() {
+            global.app.application.navigate("views/map-view.html#location-view", 'slide:left');
         }
     });
 

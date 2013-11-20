@@ -7,6 +7,7 @@
         isOtherUser: true,
         isOtherUserFriend: false,
         areEventsFound: false,
+        isLocationFound: false,
         userId: "",
         displayName: "",
         about: "",
@@ -20,6 +21,9 @@
         phone: "",
         friends: [],
         password: "",
+        latitude: "",
+        longitude: "",
+        locationDate: "",
 
         init: function () {
             var that = this;
@@ -123,6 +127,18 @@
                     }
                     else {
                         that.set("areEventsFound", false);
+                    }
+                    
+                    if (user.LastLatitude != "" && user.LastLongitute != "") {
+                        that.set("isLocationFound", true);
+                        that.set("latitude", user.LastLatitude);
+                        that.set("longitude", user.LastLongitute);
+                        that.set("locationDate", user.LastLocationDate);
+                    }
+                    else {
+                        that.set("isLocationFound", false);
+                        that.set("latitude", "");
+                        that.set("longitude", "");
                     }
                 });
             }
@@ -278,6 +294,10 @@
         
         onSeeEvents: function () {
             global.app.application.navigate("views/lists-view.html#lists-view?type=" + "0", 'slide:left');
+        },
+        
+        onSeeLocation: function() {
+            global.app.application.navigate("views/map-view.html#location-view", 'slide:left');
         },
         
         checkEnter: function (e) {
