@@ -84,6 +84,15 @@ body, html
     margin: 0px auto;
 }
 
+.km-flat .km-content {
+    background-image: url(../styles/images/wallpaper.jpg);
+    background-repeat: no-repeat;
+}
+
+.km-listview-wrapper li {
+    background: #fcfcfc;
+}
+
 .logo
 {
     background-image: url(../styles/images/logo.png);
@@ -116,6 +125,10 @@ body, html
     -webkit-appearance: none;
 }
 
+.message-div .message-button {
+    width: 20%;
+}
+
 .camera-button, .camera {
     width: 25%;
     max-width: 150px;
@@ -133,7 +146,11 @@ body, html
     -webkit-border-radius: 3px;
 }
 
-.user-details .km-list, .km-list {
+.user-details .km-list, 
+.list-view ul, 
+.view-content div ul li ul, 
+.results-list,
+.edit-event  {
     background: #fcfcfc;
 }
 /* MAP STYLES*/
@@ -313,7 +330,7 @@ body, html
     color: rgba(0, 0, 0, 0.5);
 }
 
-#message-div
+.message-div
 {
     border: 1px solid rgba(0, 0, 0, 0.1);
     border-radius: 3px 3px;

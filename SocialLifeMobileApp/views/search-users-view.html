@@ -25,7 +25,8 @@
                 <h1>Results:</h1>
                 <h1 data-bind="invisible: areUsersFound">No users found.</h1>
                 <ul data-role="listview"
-                    data-style="inset" 
+                    data-style="inset"
+                    class="results-list"
                     data-bind="source: users, visible: areUsersFound"
                     data-template="users-template">
                 </ul>

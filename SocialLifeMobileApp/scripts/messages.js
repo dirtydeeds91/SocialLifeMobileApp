@@ -53,7 +53,7 @@
                         else {
                             that.set("otherUser", messages[0].Sender);
                         }
-                        //$('.km-scroll-wrapper').scrollTo($('#write-message'), 0);
+                        $('.km-scroll-wrapper').scrollTo($('#messages'), 0);
                     }
                 });
             }
@@ -117,7 +117,7 @@
                         that.set("areMessagesReceived", true);
                         that.set("messages", messages);
                         that.set("otherUser", messages[0].Event);
-                        //$('.km-scroll-wrapper').scrollTo($('#write-message'), 0);
+                        $('.km-scroll-wrapper').scrollTo($('#message-div'), 0);
                     }
                 });
             }

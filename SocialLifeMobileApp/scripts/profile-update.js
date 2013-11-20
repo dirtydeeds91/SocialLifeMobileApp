@@ -31,7 +31,7 @@
             kendo.data.ObservableObject.fn.init.apply(that, []);
         },
         
-        load: function (e) {
+        onLoad: function (e) {
             var that = global.app.profileService.viewModel;
             that.set("isLoggedIn", global.app.isLoggedIn);
             
@@ -69,7 +69,12 @@
                         that.set("about", "Not set");
                     }
                     
-                    that.set("avatar", user.Avatar);
+                    if (user.Avatar != null) {
+                        that.set("avatar", user.Avatar);
+                    }
+                    else {
+                        that.set("avatar", "http://i.imgur.com/vlXriy0.png");
+                    }
                     
                     //if date info is missing, set some text
                     var dateString = user.BirthDate.toString();
@@ -298,6 +303,32 @@
         
         onSeeLocation: function() {
             global.app.application.navigate("views/map-view.html#location-view", 'slide:left');
+        },
+        
+        onShareLocation: function() {
+            navigator.geolocation.getCurrentPosition(
+                function (position) {
+                    httpRequest.postNoJSON(global.app.serviceUrl + global.app.profiles + "location?" 
+                                           + "latitude=" + position.coords.latitude 
+                                           + "&longitude=" + position.coords.longitude
+                                           + "&sessionKey=" + global.app.sessionKey)
+                    .then(function (data) {
+                        var that = global.app.profileService.viewModel;
+                        that.set("isLocationFound", true);
+                        that.set("latitude", position.coords.latitude);
+                        that.set("longitude", position.coords.longitude);
+                        that.set("locationDate", new Date().toDateString());
+                    });
+                },
+                function (error) {
+                    navigator.notification.alert("Unable to determine current location. Cannot connect to GPS satellite.",
+                                                 function () {
+                                                 }, "Location failed", 'OK');
+                },
+                {
+                timeout: 30000,
+                enableHighAccuracy: false
+            });
         },
         
         checkEnter: function (e) {

@@ -26,6 +26,7 @@
                 <h1 data-bind="invisible: areEventsFound">No events found.</h1>
                 <ul data-role="listview"
                     data-style="inset" 
+                    class="results-list"
                     data-bind="source: events, visible: areEventsFound"
                     data-template="event-results-template">
                 </ul>

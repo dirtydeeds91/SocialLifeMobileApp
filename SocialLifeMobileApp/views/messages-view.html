@@ -24,10 +24,10 @@
             data-bind="source: messages"
             data-template="messages-template">
         </ul>
-        <div id="message-div">
+        <div class="message-div" id="messages">
             <input id="message-input" type="search" data-bind="value: messageToSend" />
             <input type="submit" data-role="button" data-bind="click: onSendMessage" 
-                   class="update-button" value="Send" />
+                   class="message-button" value="Send" />
         </div>
     </div>
     <div class="messages" data-bind="invisible: areMessagesReceived">
@@ -36,10 +36,10 @@
                 <span class="message-text">Nothing seems to be here. Why don't you write a message?</span>
             </div>
         </div>
-        <div id="message-div">
+        <div class="message-div">
             <input id="message-input" type="search" data-bind="value: messageToSend" />
             <input type="submit" data-role="button" data-bind="click: onSendMessage" 
-                   class="update-button" value="Send" />
+                   class="message-button" value="Send" />
         </div>
     </div>
     <div class="logged-out" data-bind="invisible: isLoggedIn">

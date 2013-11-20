@@ -57,7 +57,12 @@
                     that.set("eventId", eventId);
                     that.set("eventName", event.Name);
                     that.set("content", event.Content);
-                    that.set("avatar", event.AvatarUrl);
+                    if (event.AvatarUrl != "") {
+                        that.set("avatar", event.AvatarUrl);
+                    }
+                    else {
+                        that.set("avatar", "http://i.imgur.com/vlXriy0.png");
+                    }
                     that.set("creator", event.CreatorName);
                     that.set("users", event.UsersList);
                     //var dateString = new Date(event.Date).toDateString();

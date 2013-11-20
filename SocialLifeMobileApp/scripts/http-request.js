@@ -44,6 +44,26 @@ window.httpRequest = (function() {
         return promise;
     }
     
+    function postNoJSON(url) {
+        var promise = new RSVP.Promise(function(resolve, reject) {
+            $.ajax({
+                url:url,
+                type:"POST",
+                timeout:5000,
+                success:function(data) {
+                    resolve(data);
+                },
+                error:function(request, status, error) {
+                    var errorMsg = JSON.parse(request.responseText);
+                    navigator.notification.alert(errorMsg.Message + " " + errorMsg.ExceptionMessage,
+                                                 function() {
+                                                 }, "Post request failed.", 'OK');
+                }
+            });
+        });
+        return promise;
+    }
+    
     function putJSON(url, putdata) {
         var promise = new RSVP.Promise(function(resolve, reject) {
             $.ajax({
@@ -136,6 +156,7 @@ window.httpRequest = (function() {
     return {
         getJSON:getJSON,
         postJSON:postJSON,
+        postNoJSON:postNoJSON,
         putJSON:putJSON,
         putNoJSON: putNoJSON,
         postImage: postImage,
