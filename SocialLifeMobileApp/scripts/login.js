@@ -106,6 +106,7 @@
             global.app.userId = "";
             global.app.displayName = "";
             global.app.userFriends = "";
+            that.set("profile", {});
         },
         
         onLoginSuccess: function(type) {

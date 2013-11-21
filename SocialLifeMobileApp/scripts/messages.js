@@ -53,7 +53,7 @@
                         else {
                             that.set("otherUser", messages[0].Sender);
                         }
-                        $('.km-scroll-wrapper').scrollTo($('#messages'), 0);
+                        //$('.km-scroll-wrapper').scrollTo($('#messages'), 0);
                     }
                 });
             }
@@ -117,7 +117,13 @@
                         that.set("areMessagesReceived", true);
                         that.set("messages", messages);
                         that.set("otherUser", messages[0].Event);
-                        $('.km-scroll-wrapper').scrollTo($('#message-div'), 0);
+                        //$('.km-scroll-wrapper').scrollTo($('#messages'), 0);
+                    }
+                    else {
+                        that.set("isEventMessages", true);
+                        that.set("messages", []);
+                        that.set("areMessagesReceived", false);
+                        that.set("otherUser", messages[0].Event);
                     }
                 });
             }

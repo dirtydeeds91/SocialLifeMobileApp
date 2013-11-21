@@ -268,6 +268,9 @@
         },
         
         onChooseLocation: function() {
+            var that = global.app.eventService.viewModel;
+            that.set("latitude", "");
+            that.set("longitude", "");
             global.app.application.navigate("views/map-view.html#location-view", 'slide:left');
         },
         
